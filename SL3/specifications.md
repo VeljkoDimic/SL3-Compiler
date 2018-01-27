@@ -1,6 +1,7 @@
-#Simplified Lisp-Like Language Specifications
+# Simplified Lisp-Like Language Specifications
+SL3 is a simplified version of Lisp, inspired by [WLP4](https://www.student.cs.uwaterloo.ca/~cs241/wlp4/WLP4.html)
 
-##Lexical Syntax
+## Lexical Syntax
 * WHITESPACE
     * SPACE: (ascii 32)
     * TAB: (ascii 9)
