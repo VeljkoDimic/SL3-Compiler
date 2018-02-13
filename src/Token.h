@@ -1,17 +1,18 @@
 #ifndef TOKEN_H
 #define TOKEN_H
+#include "States.h"
+
 //namespace SL3 {
 
-enum Kind {ID, INT, HEXINT};
 
 class Token {
     private:
-        Kind kind;
+        State kind;
         std::string lexeme;
     public:
-        Token(Kind kind, std::string lexeme);
+        Token(State kind, std::string lexeme);
 
-        Kind getKind() const;
+        State getKind() const;
         std::string getLexeme() const;
 
         long long toLong() const;

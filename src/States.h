@@ -1,6 +1,14 @@
+#ifndef STATES_H
+#define STATES_H
+#include <set>
+//All states
 enum State {
     /*  "***" for accepting states */
+    START,
+    FAIL,
+    WHITESPACE,
     NUM,    //***
+    ID,     //***
     LPAREN, //***
     RPAREN, //***
     D,
@@ -49,12 +57,26 @@ enum State {
     LOGEQ,
     LOGEQV, //***
     TRUE,   //***
-    N,
+    //N,
     NI,
     NIL,    //***
     C,
     CO,
     CON,
     COND,   //***
-
+    V,
+    VA,
+    VAR,
+    W,
+    WR,
+    WRI,
+    WRIT,
+    WRITE,  //***
+    //L,
+    LA,
+    LAM,
+    LAMB,
+    LAMBD,
+    LAMBDA  //***
 };
+#endif

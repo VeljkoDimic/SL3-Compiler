@@ -1,26 +1,34 @@
-#ifndef DFA_N
-#define DFA_N
+#ifndef DFA_H
+#define DFA_H
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <set>
+#include "DFA.h"
+#include "States.h"
+#include "Token.h"
+
 class DFA {
     private:
-        // Set of accepting states TODO: Change all states to enum???
-        std::set<std::string> acceptingStates;
+        std::set<State>* acceptingStates;
 
         // Return tokenized input as a vector of Tokens
         std::vector<Token> simplifiedMaximalMunch(std::string input) const;
     public:
         DFA();
 
-        // Return string of the next state based on current state and next character
-        std::string transition(std::string state, char nextChar) const;
+        // Return the next state based on current state and next character
+        State transition(State state, char nextChar) const;
 
         // Return if the state returned from transition is a failure
-        bool failed(std::string state) const;
+        bool failed(State state) const;
 
         // Return if the state returned from transition is accepting
-        bool accept(std::string state) const;
+        bool accept(State state) const;
 
         // Return starting state of DFA
-        std::string start() const;
+        State start() const;
 
         // Scans the input and returns the list of tokens
         std::vector<Token> scan(std::string input) const;
