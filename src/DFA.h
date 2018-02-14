@@ -11,7 +11,7 @@
 
 class DFA {
     private:
-        std::set<State>* acceptingStates;
+        std::set<State>* accepting_states;
 
         // Return tokenized input as a vector of Tokens
         std::vector<Token> simplifiedMaximalMunch(std::string input) const;
@@ -19,7 +19,7 @@ class DFA {
         DFA();
 
         // Return the next state based on current state and next character
-        State transition(State state, char nextChar) const;
+        State transition(State state, char next_char) const;
 
         // Return if the state returned from transition is a failure
         bool failed(State state) const;

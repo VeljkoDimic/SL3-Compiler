@@ -15,6 +15,8 @@ class Token {
         State getKind() const;
         std::string getLexeme() const;
 
+        friend std::ostream& operator<< (std::ostream &strm, const Token &a);
+
         long long toLong() const;
         int toInt() const;
 };

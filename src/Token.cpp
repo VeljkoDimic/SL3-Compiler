@@ -1,6 +1,7 @@
 #include <string>
 #include <sstream>
 #include <iomanip>
+#include <iostream>
 #include "Token.h"
 #include "States.h"
 #include "DFA.h"
@@ -14,6 +15,11 @@ State Token::getKind() const {
 
 std::string Token::getLexeme() const {
     return lexeme;
+}
+
+std::ostream& operator<< (std::ostream &strm, const Token &a) {
+    return strm << "TOKEN(" << state_string[a.getKind()]
+            << ",'" << a.getLexeme() << "')";
 }
 
 long long Token::toLong() const {

@@ -19,12 +19,13 @@ int main(int argc, char** argv) {
             tokenLines.push_back(dfa.scan(line));
         }
     } catch (ScanningFailure &f) {
+        std::cerr << f.getMessage() << std::endl;
         return 1;
     }
 
     for (int i = 0; i < tokenLines.size(); ++i) {
         for (int j = 0; j < tokenLines.at(i).size(); ++j) {
-            std::cout << tokenLines.at(i).at(j).getLexeme() << std::endl;
+            std::cout << tokenLines.at(i).at(j) << std::endl;
         }
     }
 
