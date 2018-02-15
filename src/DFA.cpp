@@ -3,6 +3,7 @@
 #include <vector>
 #include <set>
 #include <map>
+#include <algorithm>
 #include "Token.h"
 #include "DFA.h"
 #include "States.h"
@@ -49,6 +50,7 @@ DFA::DFA() {
 accepting_states = new std::set<State>{
                             NUM,
                             ID,
+                            WHITESPACE,
                             LPAREN,
                             RPAREN,
                             DEFINE,
@@ -105,6 +107,8 @@ State DFA::transition(State state, char next_char) const {
         if (c == '=')           return LE;
     } else if (state == GT) {
         if (c == '=')           return GE;
+    } else if (state == WHITESPACE) {
+        if (isspace(c))         return WHITESPACE;
     }
     return FAIL;
 };
@@ -151,19 +155,14 @@ std::vector<Token> DFA::scan(std::string input) const {
 
 
     //Remove whitespace and separate IDs from keywords
-    for (auto &token : tokens) {
-        if (token.getKind() == ID) {
-            if (keywords.find(token.getLexeme()) != keywords.end()) {
-                new_tokens.push_back(
-                        Token(keywords[token.getLexeme()],
-                        token.getLexeme()));
-            }
-        }
-
-        else if (token.getKind() != WHITESPACE){
-            new_tokens.push_back(token);
-        }
-    }
+    tokens.erase(std::remove_if(tokens.begin(), tokens.end(),
+                [keywords](Token& t) {
+                    if (keywords.find(t.getLexeme()) != keywords.end()) {
+                        t = Token(keywords.at(t.getLexeme()),t.getLexeme());
+                    }
+                    return t.getKind() == WHITESPACE;
+                }),
+            tokens.end());
 
     return tokens;
 };
