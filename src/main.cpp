@@ -14,6 +14,7 @@ int main(int argc, char** argv) {
     std::vector<std::vector<Token>> tokenLines;
     std::string line;
 
+    //Lexing
     try {
         while (getline(std::cin, line)) {
             tokenLines.push_back(dfa.scan(line));
@@ -28,13 +29,6 @@ int main(int argc, char** argv) {
             std::cout << tokenLines.at(i).at(j) << std::endl;
         }
     }
-
-    //try {
-        //assemble(tokenLines);
-    //} catch (AssemblingFailure &f) {
-        //std::cerr << f.getMessage() << std::endl;
-        //return 1;
-    //}
 
     return 0;
 

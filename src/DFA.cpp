@@ -166,4 +166,3 @@ std::vector<Token> DFA::scan(std::string input) const {
 
     return tokens;
 };
-
