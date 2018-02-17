@@ -70,4 +70,7 @@ sexp → LPAREN LOGXOR sexps RPAREN
 sexp → LPAREN LOGNOR sexps RPAREN
 sexp → LPAREN LOGEQV sexps RPAREN
 sexp → LPAREN WRITE sexps RPAREN
+sexp → LPAREN LPAREN LAMBDA LPAREN params RPAREN LPAREN sexp RPAREN RPAREN sexps RPAREN
+params →
+params → ID params
 <!--TODO Lambda-->
