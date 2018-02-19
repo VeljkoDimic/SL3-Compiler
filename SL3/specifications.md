@@ -39,38 +39,37 @@ SL3 is a simplified version of Lisp, inspired by [WLP4](https://www.student.cs.u
 * LAMBDA: the string "lambda"
 
 ## Context-Free Syntax
-start → LPAREN sexp RPAREN
-sexps →
-sexps → sexp sexps
-sexp → NUM
-sexp → ID
-sexp → TRUE
-sexp → NIL
-sexp → cond
-sexp → LPAREN VAR ID sexpr RPAREN
-cond → LPAREN sexp sexp sexp RPAREN
+* start → LPAREN sexp RPAREN
+* sexps →
+* sexps → sexp sexps
+* sexp → NUM
+* sexp → ID
+* sexp → TRUE
+* sexp → NIL
+* sexp → cond
+* sexp → LPAREN VAR ID sexpr RPAREN
+* cond → LPAREN sexp sexp sexp RPAREN
 <!--sexp → DEFINE sexprs-->
-sexp → LPAREN PLUS sexps RPAREN
-sexp → LPAREN MINUS sexps RPAREN
-sexp → LPAREN STAR sexps RPAREN
-sexp → LPAREN SLASH sexps RPAREN
-sexp → LPAREN MOD sexps RPAREN
-sexp → LPAREN EQ sexps RPAREN
-sexp → LPAREN NE sexps RPAREN
-sexp → LPAREN LT sexps RPAREN
-sexp → LPAREN GT sexps RPAREN
-sexp → LPAREN LE sexps RPAREN
-sexp → LPAREN GE sexps RPAREN
-sexp → LPAREN AND sexps RPAREN
-sexp → LPAREN OR sexps RPAREN
-sexp → LPAREN NOT sexps RPAREN
-sexp → LPAREN LOGAND sexps RPAREN
-sexp → LPAREN LOGIOR sexps RPAREN
-sexp → LPAREN LOGXOR sexps RPAREN
-sexp → LPAREN LOGNOR sexps RPAREN
-sexp → LPAREN LOGEQV sexps RPAREN
-sexp → LPAREN WRITE sexps RPAREN
-sexp → LPAREN LPAREN LAMBDA LPAREN params RPAREN LPAREN sexp RPAREN RPAREN sexps RPAREN
-params →
-params → ID params
-<!--TODO Lambda-->
+* sexp → LPAREN PLUS sexps RPAREN
+* sexp → LPAREN MINUS sexps RPAREN
+* sexp → LPAREN STAR sexps RPAREN
+* sexp → LPAREN SLASH sexps RPAREN
+* sexp → LPAREN MOD sexps RPAREN
+* sexp → LPAREN EQ sexps RPAREN
+* sexp → LPAREN NE sexps RPAREN
+* sexp → LPAREN LT sexps RPAREN
+* sexp → LPAREN GT sexps RPAREN
+* sexp → LPAREN LE sexps RPAREN
+* sexp → LPAREN GE sexps RPAREN
+* sexp → LPAREN AND sexps RPAREN
+* sexp → LPAREN OR sexps RPAREN
+* sexp → LPAREN NOT sexps RPAREN
+* sexp → LPAREN LOGAND sexps RPAREN
+* sexp → LPAREN LOGIOR sexps RPAREN
+* sexp → LPAREN LOGXOR sexps RPAREN
+* sexp → LPAREN LOGNOR sexps RPAREN
+* sexp → LPAREN LOGEQV sexps RPAREN
+* sexp → LPAREN WRITE sexps RPAREN
+* sexp → LPAREN LPAREN LAMBDA LPAREN params RPAREN LPAREN sexp RPAREN RPAREN sexps RPAREN
+* params →
+* params → ID params
