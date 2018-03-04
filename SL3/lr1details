@@ -1,0 +1,38 @@
+0
+start -> * BOF LP sexp RP EOF
+
+1
+start -> BOF * LP sexp RP EOF
+
+2
+start -> BOF LP * sexp RP EOF
+sexp -> * NUM
+//And the rest of the sexp
+
+3
+start -> BOF LP sexp * RP EOF
+
+4
+start -> BOF LP sexp RP * EOF
+
+5
+start -> BOF LP sexp RP EOF *
+
+6
+sexp -> NUM *
+
+7
+sexp -> ID *
+
+8
+sexp -> TRUE *
+
+9
+sexp -> NIL *
+
+10
+sexp -> cond *
+
+11
+sexp -> LP * var
+

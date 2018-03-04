@@ -47,9 +47,9 @@ SL3 is a simplified version of Lisp, inspired by [WLP4](https://www.student.cs.u
 * sexp → TRUE
 * sexp → NIL
 * sexp → cond
-* sexp → LPAREN VAR ID sexpr RPAREN
+* sexp → LPAREN VAR ID sexp RPAREN
 * cond → LPAREN sexp sexp sexp RPAREN
-<!--sexp → DEFINE sexprs-->
+* sexp → LPAREN DEFINE ID sexp RPAREN
 * sexp → LPAREN PLUS sexps RPAREN
 * sexp → LPAREN MINUS sexps RPAREN
 * sexp → LPAREN STAR sexps RPAREN

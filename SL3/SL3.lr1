@@ -1,5 +1,88 @@
-TERMINALS
-NONTERMINALS
-START
-PRODUCTIONS
+30
+NUM
+ID
+LPAREN
+RPAREN
+DEFINE
+PLUS
+MINUS
+STAR
+SLASH
+MOD
+EQ
+NE
+LT
+GT
+LE
+GE
+AND
+OR
+NOT
+LOGAND
+LOGIOR
+LOGXOR
+LOGNOR
+LOGEQV
+TRUE
+NIL
+COND
+VAR
+WRITE
+LAMBDA
+5
+start
+sexps
+sexp
+cond
+params
+start
+34
+start LPAREN sexp RPAREN
+sexps
+sexps sexp sexps
+sexp NUM
+sexp ID
+sexp TRUE
+sexp NIL
+sexp cond
+sexp LPAREN VAR ID sexp RPAREN
+cond LPAREN sexp sexp sexp RPAREN
+sexp LPAREN DEFINE ID sexp RPAREN
+sexp LPAREN PLUS sexps RPAREN
+sexp LPAREN MINUS sexps RPAREN
+sexp LPAREN STAR sexps RPAREN
+sexp LPAREN SLASH sexps RPAREN
+sexp LPAREN MOD sexps RPAREN
+sexp LPAREN EQ sexps RPAREN
+sexp LPAREN NE sexps RPAREN
+sexp LPAREN LT sexps RPAREN
+sexp LPAREN GT sexps RPAREN
+sexp LPAREN LE sexps RPAREN
+sexp LPAREN GE sexps RPAREN
+sexp LPAREN AND sexps RPAREN
+sexp LPAREN OR sexps RPAREN
+sexp LPAREN NOT sexps RPAREN
+sexp LPAREN LOGAND sexps RPAREN
+sexp LPAREN LOGIOR sexps RPAREN
+sexp LPAREN LOGXOR sexps RPAREN
+sexp LPAREN LOGNOR sexps RPAREN
+sexp LPAREN LOGEQV sexps RPAREN
+sexp LPAREN WRITE sexps RPAREN
+sexp LPAREN LPAREN LAMBDA LPAREN params RPAREN LPAREN sexp RPAREN RPAREN sexps RPAREN
+params
+params ID params
 RULES
+0 BOF shift 1
+
+1 LP shift 2
+
+2 sexp shift 3
+2 NUM shift 5
+2 ID shift 6
+2 TRUE shift 7
+2 NIL shift 8
+2 cond shift 9
+2 LPAREN shift 10
+
+3 RP shift 4
+
