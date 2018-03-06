@@ -89,6 +89,26 @@ RULES
 10 COND shift 11
 10 VAR shift 15
 10 DEFINE shift 19
+10 PLUS shift 23
+10 MINUS shift 29
+10 STAR shift 32
+10 SLASH shift 35
+10 MOD shift 38
+10 EQ shift 41
+10 NE shift 44
+10 LT shift 47
+10 GT shift 50
+10 LE shift 53
+10 GE shift 56
+10 AND shift 59
+10 OR shift 62
+10 NOT shift 65
+10 LOGAND shift 68
+10 LOGIOR shift 71
+10 LOGXOR shift 74
+10 LOGNOR shift 77
+10 LOGEQV shift 80
+10 WRITE shift 83
 .............
 
 11 sexp shift 12
@@ -96,14 +116,14 @@ RULES
 11 ID shift 7
 11 TRUE shift 8
 11 NIL shift 9
-11 LPAREN shift 11
+11 LPAREN shift 10
 
 12 sexp shift 13
 12 NUM shift 6
 12 ID shift 7
 12 TRUE shift 8
 12 NIL shift 9
-12 LPAREN shift 11
+12 LPAREN shift 10
 
 13 RP shift 14
 
@@ -114,6 +134,228 @@ RULES
 16 ID shift 7
 16 TRUE shift 8
 16 NIL shift 9
-16 LPAREN shift 11
+16 LPAREN shift 10
 
 17 RPAREN shift 18
+
+19 ID shift 20
+
+20 sexp shift 21
+20 NUM shift 6
+20 ID shift 7
+20 TRUE shift 8
+20 NIL shift 9
+20 LPAREN shift 10
+
+21 RPAREN shift 22
+
+23 PLUS shift 24
+
+24 sexps shift 25
+24 sexp shift 27
+24 NUM shift 6
+24 ID shift 7
+24 TRUE shift 8
+24 NIL shift 9
+24 LPAREN shift 10
+
+25 RPAREN shift 26
+
+27 sexps shift 28
+27 sexp shift 27
+27 NUM shift 6
+27 ID shift 7
+27 TRUE shift 8
+27 NIL shift 9
+27 LPAREN shift 10
+
+29 sexps shift 30
+29 sexp shift 27
+29 NUM shift 6
+29 ID shift 7
+29 TRUE shift 8
+29 NIL shift 9
+29 LPAREN shift 10
+
+30 RPAREN shift 31
+
+32 sexps shift 33
+32 sexp shift 27
+32 NUM shift 6
+32 ID shift 7
+32 TRUE shift 8
+32 NIL shift 9
+32 LPAREN shift 10
+
+33 RPAREN shift 34
+
+35 sexps shift 36
+35 sexp shift 27
+35 NUM shift 6
+35 ID shift 7
+35 TRUE shift 8
+35 NIL shift 9
+35 LPAREN shift 10
+
+36 RPAREN shift 37
+
+38 sexps shift 39
+38 sexp shift 27
+38 NUM shift 6
+38 ID shift 7
+38 TRUE shift 8
+38 NIL shift 9
+38 LPAREN shift 10
+
+39 RPAREN shift 40
+
+41 sexps shift 42
+41 sexp shift 27
+41 NUM shift 6
+41 ID shift 7
+41 TRUE shift 8
+41 NIL shift 9
+41 LPAREN shift 10
+
+42 RPAREN shift 43
+
+44 sexps shift 45
+44 sexp shift 27
+44 NUM shift 6
+44 ID shift 7
+44 TRUE shift 8
+44 NIL shift 9
+44 LPAREN shift 10
+
+45 RPAREN shift 46
+
+47 sexps shift 48
+47 sexp shift 27
+47 NUM shift 6
+47 ID shift 7
+47 TRUE shift 8
+47 NIL shift 9
+47 LPAREN shift 10
+
+48 RPAREN shift 49
+
+50 sexps shift 51
+50 sexp shift 27
+50 NUM shift 6
+50 ID shift 7
+50 TRUE shift 8
+50 NIL shift 9
+50 LPAREN shift 10
+
+51 RPAREN shift 52
+
+53 sexps shift 54
+53 sexp shift 27
+53 NUM shift 6
+53 ID shift 7
+53 TRUE shift 8
+53 NIL shift 9
+53 LPAREN shift 10
+
+54 RPAREN shift 55
+
+56 sexps shift 57
+56 sexp shift 27
+56 NUM shift 6
+56 ID shift 7
+56 TRUE shift 8
+56 NIL shift 9
+56 LPAREN shift 10
+
+57 RPAREN shift 58
+
+59 sexps shift 60
+59 sexp shift 27
+59 NUM shift 6
+59 ID shift 7
+59 TRUE shift 8
+59 NIL shift 9
+59 LPAREN shift 10
+
+60 RPAREN shift 61
+
+62 sexps shift 63
+62 sexp shift 27
+62 NUM shift 6
+62 ID shift 7
+62 TRUE shift 8
+62 NIL shift 9
+62 LPAREN shift 10
+
+63 RPAREN shift 64
+
+65 sexps shift 66
+65 sexp shift 27
+65 NUM shift 6
+65 ID shift 7
+65 TRUE shift 8
+65 NIL shift 9
+65 LPAREN shift 10
+
+66 RPAREN shift 67
+
+68 sexps shift 69
+68 sexp shift 27
+68 NUM shift 6
+68 ID shift 7
+68 TRUE shift 8
+68 NIL shift 9
+68 LPAREN shift 10
+
+69 RPAREN shift 70
+
+71 sexps shift 72
+71 sexp shift 27
+71 NUM shift 6
+71 ID shift 7
+71 TRUE shift 8
+71 NIL shift 9
+71 LPAREN shift 10
+
+72 RPAREN shift 73
+
+74 sexps shift 75
+74 sexp shift 27
+74 NUM shift 6
+74 ID shift 7
+74 TRUE shift 8
+74 NIL shift 9
+74 LPAREN shift 10
+
+75 RPAREN shift 76
+
+77 sexps shift 78
+77 sexp shift 27
+77 NUM shift 6
+77 ID shift 7
+77 TRUE shift 8
+77 NIL shift 9
+77 LPAREN shift 10
+
+78 RPAREN shift 79
+
+80 sexps shift 81
+80 sexp shift 27
+80 NUM shift 6
+80 ID shift 7
+80 TRUE shift 8
+80 NIL shift 9
+80 LPAREN shift 10
+
+81 RPAREN shift 82
+
+83 sexps shift 84
+83 sexp shift 27
+83 NUM shift 6
+83 ID shift 7
+83 TRUE shift 8
+83 NIL shift 9
+83 LPAREN shift 10
+
+84 RPAREN shift 85
+

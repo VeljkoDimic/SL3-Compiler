@@ -67,4 +67,287 @@ sexp -> LP VAR ID sexp * RP
 sexp -> LP VAR ID sexp RP *
 
 19
-sexp -> LP DEFINE * ID sexp RPAREN
+sexp -> LP DEFINE * ID sexp RP
+
+20
+sexp -> LP DEFINE ID * sexp RP
+
+21
+sexp -> LP DEFINE ID sexp * RP
+
+22
+sexp -> LP DEFINE ID sexp RP *
+
+23
+sexp -> LP * PLUS sexps RP
+
+24
+sexp -> LP PLUS * sexps RP
+sexps -> *
+sexps -> * sexp sexps
+sexp -> * NUM
+sexp -> * ........
+
+25
+sexp -> LP PLUS sexps * RP
+
+26
+sexp -> LP PLUS sexps RP *
+
+27
+sexps -> sexp * sexps
+sexps -> *
+sexps -> * sexp sexps
+sexp -> * NUM
+sexp -> * ........
+
+28
+sexps -> sexp sexps *
+
+29
+sexp -> LP MINUS * sexps RP
+sexps -> *
+sexps -> * sexp sexps
+sexp -> * NUM
+sexp -> * ........
+
+30
+sexp -> LP MINUS sexps * RP
+
+31
+sexp -> LP MINUS sexps RP *
+
+32
+sexp -> LP STAR * sexps RP
+sexps -> *
+sexps -> * sexp sexps
+sexp -> * NUM
+sexp -> * .......
+
+33
+sexp -> LP STAR sexps * RP
+
+34
+sexp -> LP STAR sexps RP *
+
+35
+sexp -> LP SLASH * sexps RP
+sexps -> *
+sexps -> * sexp sexps
+sexp -> * NUM
+sexp -> * .......
+
+36
+sexp -> LP SLASH sexps * RP
+
+37
+sexp -> LP SLASH sexps RP *
+
+38
+sexp -> LP MOD * sexps RP
+sexps -> *
+sexps -> * sexp sexps
+sexp -> * NUM
+sexp -> * .......
+
+39
+sexp -> LP MOD sexps * RP
+
+40
+sexp -> LP MOD sexps RP *
+
+41
+sexp -> LP EQ * sexps RP
+sexps -> *
+sexps -> * sexp sexps
+sexp -> * NUM
+sexp -> * .......
+
+42
+sexp -> LP EQ sexps * RP
+
+43
+sexp -> LP EQ sexps RP *
+
+44
+sexp -> LP NE * sexps RP
+sexps -> *
+sexps -> * sexp sexps
+sexp -> * NUM
+sexp -> * .......
+
+45
+sexp -> LP NE sexps * RP
+
+46
+sexp -> LP NE sexps RP *
+
+47
+sexp -> LP LT * sexps RP
+sexps -> *
+sexps -> * sexp sexps
+sexp -> * NUM
+sexp -> * .......
+
+48
+sexp -> LP LT sexps * RP
+
+49
+sexp -> LP LT sexps RP *
+
+50
+sexp -> LP GT * sexps RP
+sexps -> *
+sexps -> * sexp sexps
+sexp -> * NUM
+sexp -> * .......
+
+51
+sexp -> LP GT sexps * RP
+
+52
+sexp -> LP GT sexps RP *
+
+53
+sexp -> LP LE * sexps RP
+sexps -> *
+sexps -> * sexp sexps
+sexp -> * NUM
+sexp -> * .......
+
+54
+sexp -> LP LE sexps * RP
+
+55
+sexp -> LP LE sexps RP *
+
+56
+sexp -> LP GE * sexps RP
+sexps -> *
+sexps -> * sexp sexps
+sexp -> * NUM
+sexp -> * .......
+
+57
+sexp -> LP GE sexps * RP
+
+58
+sexp -> LP GE sexps RP *
+
+59
+sexp -> LP AND * sexps RP
+sexps -> *
+sexps -> * sexp sexps
+sexp -> * NUM
+sexp -> * .......
+
+60
+sexp -> LP AND sexps * RP
+
+61
+sexp -> LP AND sexps RP *
+
+62
+sexp -> LP OR * sexps RP
+sexps -> *
+sexps -> * sexp sexps
+sexp -> * NUM
+sexp -> * .......
+
+63
+sexp -> LP OR sexps * RP
+
+64
+sexp -> LP OR sexps RP *
+
+65
+sexp -> LP NOT * sexps RP
+sexps -> *
+sexps -> * sexp sexps
+sexp -> * NUM
+sexp -> * .......
+
+66
+sexp -> LP NOT sexps * RP
+
+67
+sexp -> LP NOT sexps RP *
+
+68
+sexp -> LP LOGAND * sexps RP
+sexps -> *
+sexps -> * sexp sexps
+sexp -> * NUM
+sexp -> * .......
+
+69
+sexp -> LP LOGAND sexps * RP
+
+70
+sexp -> LP LOGAND sexps RP *
+
+71
+sexp -> LP LOGIOR * sexps RP
+sexps -> *
+sexps -> * sexp sexps
+sexp -> * NUM
+sexp -> * .......
+
+72
+sexp -> LP LOGIOR sexps * RP
+
+73
+sexp -> LP LOGIOR sexps RP *
+
+74
+sexp -> LP LOGXOR * sexps RP
+sexps -> *
+sexps -> * sexp sexps
+sexp -> * NUM
+sexp -> * .......
+
+75
+sexp -> LP LOGXOR sexps * RP
+
+76
+sexp -> LP LOGXOR sexps RP *
+
+77
+sexp -> LP LOGNOR * sexps RP
+sexps -> *
+sexps -> * sexp sexps
+sexp -> * NUM
+sexp -> * .......
+
+78
+sexp -> LP LOGNOR sexps * RP
+
+79
+sexp -> LP LOGNOR sexps RP *
+
+80
+sexp -> LP LOGEQV * sexps RP
+sexps -> *
+sexps -> * sexp sexps
+sexp -> * NUM
+sexp -> * .......
+
+81
+sexp -> LP LOGEQV sexps * RP
+
+82
+sexp -> LP LOGEQV sexps RP *
+
+83
+sexp -> LP WRITE * sexps RP
+sexps -> *
+sexps -> * sexp sexps
+sexp -> * NUM
+sexp -> * .......
+
+84
+sexp -> LP WRITE sexps * RP
+
+85
+sexp -> LP WRITE sexps RP *
+
