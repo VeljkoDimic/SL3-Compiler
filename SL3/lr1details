@@ -31,8 +31,40 @@ sexp -> TRUE *
 sexp -> NIL *
 
 10
-sexp -> cond *
+sexp -> LP * COND sexp sexp sexp RP
+sexp -> LP * VAR
+sexp -> LP * PLUS
+sexp -> LP * .....
 
 11
-sexp -> LP * var
+sexp -> LP COND * sexp sexp sexp RP
+sexp -> * NUM
+sexp -> * .....
 
+12
+sexp -> LP COND sexp sexp * sexp RP
+sexp -> * NUM
+sexp -> * .....
+
+13
+cond -> LP sexp sexp sexp * RP
+
+14
+cond -> LP sexp sexp sexp RP *
+
+15
+sexp -> LP VAR * ID sexp RP
+
+16
+sexp -> LP VAR ID * sexp RP
+sexp -> * NUM
+sexp -> * ........
+
+17
+sexp -> LP VAR ID sexp * RP
+
+18
+sexp -> LP VAR ID sexp RP *
+
+19
+sexp -> LP DEFINE * ID sexp RPAREN

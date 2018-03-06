@@ -29,11 +29,10 @@ COND
 VAR
 WRITE
 LAMBDA
-5
+4
 start
 sexps
 sexp
-cond
 params
 start
 34
@@ -44,7 +43,7 @@ sexp NUM
 sexp ID
 sexp TRUE
 sexp NIL
-sexp cond
+sexp LPAREN COND sexp sexp sexp RPAREN
 sexp LPAREN VAR ID sexp RPAREN
 cond LPAREN sexp sexp sexp RPAREN
 sexp LPAREN DEFINE ID sexp RPAREN
@@ -77,12 +76,44 @@ RULES
 1 LP shift 2
 
 2 sexp shift 3
-2 NUM shift 5
-2 ID shift 6
-2 TRUE shift 7
-2 NIL shift 8
-2 cond shift 9
+2 NUM shift 6
+2 ID shift 7
+2 TRUE shift 8
+2 NIL shift 9
 2 LPAREN shift 10
 
 3 RP shift 4
 
+4 EOF shift 5
+
+10 COND shift 11
+10 VAR shift 15
+10 DEFINE shift 19
+.............
+
+11 sexp shift 12
+11 NUM shift 6
+11 ID shift 7
+11 TRUE shift 8
+11 NIL shift 9
+11 LPAREN shift 11
+
+12 sexp shift 13
+12 NUM shift 6
+12 ID shift 7
+12 TRUE shift 8
+12 NIL shift 9
+12 LPAREN shift 11
+
+13 RP shift 14
+
+15 ID shift 16
+
+16 sexp shift 17
+16 NUM shift 6
+16 ID shift 7
+16 TRUE shift 8
+16 NIL shift 9
+16 LPAREN shift 11
+
+17 RPAREN shift 18
