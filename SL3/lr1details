@@ -351,3 +351,48 @@ sexp -> LP WRITE sexps * RP
 85
 sexp -> LP WRITE sexps RP *
 
+86
+sexp -> LP LP * LAMBDA LP params RP RP sexp RP RP sexps RP
+
+87
+sexp -> LP LP LAMBDA * LP params RP RP sexp RP RP sexps RP
+
+88
+sexp -> LP LP LAMBDA LP * params RP RP sexp RP RP sexps RP
+params -> *
+params -> * ID params
+
+89
+sexp -> LP LP LAMBDA LP params * RP RP sexp RP RP sexps RP
+
+90
+sexp -> LP LP LAMBDA LP params RP * RP sexp RP RP sexps RP
+
+91
+sexp -> LP LP LAMBDA LP params RP RP * sexp RP RP sexps RP
+sexp -> * NUM
+sexp -> * .......
+
+92
+sexp -> LP LP LAMBDA LP params RP RP sexp * RP RP sexps RP
+
+93
+sexp -> LP LP LAMBDA LP params RP RP sexp RP * RP sexps RP
+
+94
+sexp -> LP LP LAMBDA LP params RP RP sexp RP RP * sexps RP
+sexps -> *
+sexps -> * sexp sexps
+sexp -> * NUM
+sexp -> * .......
+
+95
+sexp -> LP LP LAMBDA LP params RP RP sexp RP RP sexps * RP
+
+96
+sexp -> LP LP LAMBDA LP params RP RP sexp RP RP sexps RP *
+
+97
+params -> ID * params
+params -> *
+params -> * ID params

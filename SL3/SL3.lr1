@@ -109,7 +109,7 @@ RULES
 10 LOGNOR shift 77
 10 LOGEQV shift 80
 10 WRITE shift 83
-.............
+10 LPAREN shift 86 TODO
 
 11 sexp shift 12
 11 NUM shift 6
@@ -359,3 +359,37 @@ RULES
 
 84 RPAREN shift 85
 
+86 LAMBDA shift 87
+
+87 LPAREN shift 88
+
+88 params shift 89
+88 ID shift 97
+
+89 RPAREN shift 90
+
+90 RPAREN shift 91
+
+91 sexp shift 92
+91 NUM shift 6
+91 ID shift 7
+91 TRUE shift 8
+91 NIL shift 9
+91 LPAREN shift 10
+
+92 RPAREN shift 93
+
+93 RPAREN shift 94
+
+94 sexps shift 95
+94 sexp shift 27
+94 NUM shift 6
+94 ID shift 7
+94 TRUE shift 8
+94 NIL shift 9
+94 LPAREN shift 10
+
+95 RPAREN shift 96
+
+97 params shift 98
+97 ID shift 97
