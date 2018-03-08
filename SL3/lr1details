@@ -42,15 +42,20 @@ sexp -> * NUM
 sexp -> * .....
 
 12
-sexp -> LP COND sexp sexp * sexp RP
+sexp -> LP COND sexp * sexp sexp RP
 sexp -> * NUM
 sexp -> * .....
 
 13
-cond -> LP sexp sexp sexp * RP
+sexp -> LP COND sexp sexp * sexp RP
+sexp -> * NUM
+sexp -> * .....
+
+99
+sexp -> LP COND sexp sexp sexp * RP
 
 14
-cond -> LP sexp sexp sexp RP *
+sexp -> LP COND sexp sexp sexp RP *
 
 15
 sexp -> LP VAR * ID sexp RP
@@ -396,3 +401,6 @@ sexp -> LP LP LAMBDA LP params RP RP sexp RP RP sexps RP *
 params -> ID * params
 params -> *
 params -> * ID params
+
+98
+params -> ID params *
