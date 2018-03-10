@@ -36,83 +36,75 @@ sexp
 params
 start
 33
-1 start LPAREN sexp RPAREN
-2 sexps
-3 sexps sexp sexps
-4 sexp NUM
-5 sexp ID
-6 sexp TRUE
-7 sexp NIL
-8 sexp LPAREN COND sexp sexp sexp RPAREN
-9 sexp LPAREN VAR ID sexp RPAREN
-10 sexp LPAREN DEFINE ID sexp RPAREN
-11 sexp LPAREN PLUS sexps RPAREN
-12 sexp LPAREN MINUS sexps RPAREN
-13 sexp LPAREN STAR sexps RPAREN
-14 sexp LPAREN SLASH sexps RPAREN
-15 sexp LPAREN MOD sexps RPAREN
-16 sexp LPAREN EQ sexps RPAREN
-17 sexp LPAREN NE sexps RPAREN
-18 sexp LPAREN LT sexps RPAREN
-19 sexp LPAREN GT sexps RPAREN
-20 sexp LPAREN LE sexps RPAREN
-21 sexp LPAREN GE sexps RPAREN
-22 sexp LPAREN AND sexps RPAREN
-23 sexp LPAREN OR sexps RPAREN
-24 sexp LPAREN NOT sexps RPAREN
-25 sexp LPAREN LOGAND sexps RPAREN
-26 sexp LPAREN LOGIOR sexps RPAREN
-27 sexp LPAREN LOGXOR sexps RPAREN
-28 sexp LPAREN LOGNOR sexps RPAREN
-29 sexp LPAREN LOGEQV sexps RPAREN
-30 sexp LPAREN WRITE sexps RPAREN
-31 sexp LPAREN LPAREN LAMBDA LPAREN params RPAREN LPAREN sexp RPAREN RPAREN sexps RPAREN
-32 params
-33 params ID params
-ACTIONS
+start LPAREN sexp RPAREN
+sexps
+sexps sexp sexps
+sexp NUM
+sexp ID
+sexp TRUE
+sexp NIL
+sexp LPAREN COND sexp sexp sexp RPAREN
+sexp LPAREN VAR ID sexp RPAREN
+sexp LPAREN DEFINE ID sexp RPAREN
+sexp LPAREN PLUS sexps RPAREN
+sexp LPAREN MINUS sexps RPAREN
+sexp LPAREN STAR sexps RPAREN
+sexp LPAREN SLASH sexps RPAREN
+sexp LPAREN MOD sexps RPAREN
+sexp LPAREN EQ sexps RPAREN
+sexp LPAREN NE sexps RPAREN
+sexp LPAREN LT sexps RPAREN
+sexp LPAREN GT sexps RPAREN
+sexp LPAREN LE sexps RPAREN
+sexp LPAREN GE sexps RPAREN
+sexp LPAREN AND sexps RPAREN
+sexp LPAREN OR sexps RPAREN
+sexp LPAREN NOT sexps RPAREN
+sexp LPAREN LOGAND sexps RPAREN
+sexp LPAREN LOGIOR sexps RPAREN
+sexp LPAREN LOGXOR sexps RPAREN
+sexp LPAREN LOGNOR sexps RPAREN
+sexp LPAREN LOGEQV sexps RPAREN
+sexp LPAREN WRITE sexps RPAREN
+sexp LPAREN LPAREN LAMBDA LPAREN params RPAREN LPAREN sexp RPAREN RPAREN sexps RPAREN
+params
+params ID params
+100
+455
 0 BOF shift 1
-
-1 LP shift 2
-
+1 LPAREN shift 2
 2 sexp shift 3
 2 NUM shift 6
 2 ID shift 7
 2 TRUE shift 8
 2 NIL shift 9
 2 LPAREN shift 10
-
-3 RP shift 4
-
+3 RPAREN shift 4
 4 EOF shift 5
-
-6 RPAREN reduce 4
-6 NUM reduce 4
-6 ID reduce 4
-6 TRUE reduce 4
-6 NIL reduce 4
-6 LPAREN reduce 4
-
-7 RPAREN reduce 5
-7 NUM reduce 5
-7 ID reduce 5
-7 TRUE reduce 5
-7 NIL reduce 5
-7 LPAREN reduce 5
-
-8 RPAREN reduce 6
-8 NUM reduce 6
-8 ID reduce 6
-8 TRUE reduce 6
-8 NIL reduce 6
-8 LPAREN reduce 6
-
-9 RPAREN reduce 7
-9 NUM reduce 7
-9 ID reduce 7
-9 TRUE reduce 7
-9 NIL reduce 7
-9 LPAREN reduce 7
-
+6 RPAREN reduce 3
+6 NUM reduce 3
+6 ID reduce 3
+6 TRUE reduce 3
+6 NIL reduce 3
+6 LPAREN reduce 3
+7 RPAREN reduce 4
+7 NUM reduce 4
+7 ID reduce 4
+7 TRUE reduce 4
+7 NIL reduce 4
+7 LPAREN reduce 4
+8 RPAREN reduce 5
+8 NUM reduce 5
+8 ID reduce 5
+8 TRUE reduce 5
+8 NIL reduce 5
+8 LPAREN reduce 5
+9 RPAREN reduce 6
+9 NUM reduce 6
+9 ID reduce 6
+9 TRUE reduce 6
+9 NIL reduce 6
+9 LPAREN reduce 6
 10 COND shift 11
 10 VAR shift 15
 10 DEFINE shift 19
@@ -137,73 +129,59 @@ ACTIONS
 10 LOGEQV shift 80
 10 WRITE shift 83
 10 LPAREN shift 86
-
 11 sexp shift 12
 11 NUM shift 6
 11 ID shift 7
 11 TRUE shift 8
 11 NIL shift 9
 11 LPAREN shift 10
-
 12 sexp shift 13
 12 NUM shift 6
 12 ID shift 7
 12 TRUE shift 8
 12 NIL shift 9
 12 LPAREN shift 10
-
-13 RPAREN shift 99
+13 sexp shift 99
 13 NUM shift 6
 13 ID shift 7
 13 TRUE shift 8
 13 NIL shift 9
 13 LPAREN shift 10
-
-14 RPAREN reduce 8
-14 NUM reduce 8
-14 ID reduce 8
-14 TRUE reduce 8
-14 NIL reduce 8
-14 LPAREN reduce 8
-
+14 RPAREN reduce 7
+14 NUM reduce 7
+14 ID reduce 7
+14 TRUE reduce 7
+14 NIL reduce 7
+14 LPAREN reduce 7
 15 ID shift 16
-
 16 sexp shift 17
 16 NUM shift 6
 16 ID shift 7
 16 TRUE shift 8
 16 NIL shift 9
 16 LPAREN shift 10
-
 17 RPAREN shift 18
-
-18 RPAREN reduce 9
-18 NUM reduce 9
-18 ID reduce 9
-18 TRUE reduce 9
-18 NIL reduce 9
-18 LPAREN reduce 9
-
+18 RPAREN reduce 8
+18 NUM reduce 8
+18 ID reduce 8
+18 TRUE reduce 8
+18 NIL reduce 8
+18 LPAREN reduce 8
 19 ID shift 20
-
 20 sexp shift 21
 20 NUM shift 6
 20 ID shift 7
 20 TRUE shift 8
 20 NIL shift 9
 20 LPAREN shift 10
-
 21 RPAREN shift 22
-
-22 RPAREN reduce 10
-22 NUM reduce 10
-22 ID reduce 10
-22 TRUE reduce 10
-22 NIL reduce 10
-22 LPAREN reduce 10
-
+22 RPAREN reduce 9
+22 NUM reduce 9
+22 ID reduce 9
+22 TRUE reduce 9
+22 NIL reduce 9
+22 LPAREN reduce 9
 23 PLUS shift 24
-
 24 sexps shift 25
 24 sexp shift 27
 24 NUM shift 6
@@ -211,17 +189,14 @@ ACTIONS
 24 TRUE shift 8
 24 NIL shift 9
 24 LPAREN shift 10
-24 RPAREN reduce 2
-
+24 RPAREN reduce 1
 25 RPAREN shift 26
-
-26 RPAREN reduce 11
-26 NUM reduce 11
-26 ID reduce 11
-26 TRUE reduce 11
-26 NIL reduce 11
-26 LPAREN reduce 11
-
+26 RPAREN reduce 10
+26 NUM reduce 10
+26 ID reduce 10
+26 TRUE reduce 10
+26 NIL reduce 10
+26 LPAREN reduce 10
 27 sexps shift 28
 27 sexp shift 27
 27 NUM shift 6
@@ -229,10 +204,8 @@ ACTIONS
 27 TRUE shift 8
 27 NIL shift 9
 27 LPAREN shift 10
-27 RPAREN reduce 2
-
-28 RPAREN reduce 3
-
+27 RPAREN reduce 1
+28 RPAREN reduce 2
 29 sexps shift 30
 29 sexp shift 27
 29 NUM shift 6
@@ -240,17 +213,14 @@ ACTIONS
 29 TRUE shift 8
 29 NIL shift 9
 29 LPAREN shift 10
-29 RPAREN reduce 2
-
+29 RPAREN reduce 1
 30 RPAREN shift 31
-
-31 RPAREN reduce 12
-31 NUM reduce 12
-31 ID reduce 12
-31 TRUE reduce 12
-31 NIL reduce 12
-31 LPAREN reduce 12
-
+31 RPAREN reduce 11
+31 NUM reduce 11
+31 ID reduce 11
+31 TRUE reduce 11
+31 NIL reduce 11
+31 LPAREN reduce 11
 32 sexps shift 33
 32 sexp shift 27
 32 NUM shift 6
@@ -258,17 +228,14 @@ ACTIONS
 32 TRUE shift 8
 32 NIL shift 9
 32 LPAREN shift 10
-32 RPAREN reduce 2
-
+32 RPAREN reduce 1
 33 RPAREN shift 34
-
-34 RPAREN reduce 13
-34 NUM reduce 13
-34 ID reduce 13
-34 TRUE reduce 13
-34 NIL reduce 13
-34 LPAREN reduce 13
-
+34 RPAREN reduce 12
+34 NUM reduce 12
+34 ID reduce 12
+34 TRUE reduce 12
+34 NIL reduce 12
+34 LPAREN reduce 12
 35 sexps shift 36
 35 sexp shift 27
 35 NUM shift 6
@@ -276,17 +243,14 @@ ACTIONS
 35 TRUE shift 8
 35 NIL shift 9
 35 LPAREN shift 10
-35 RPAREN reduce 2
-
+35 RPAREN reduce 1
 36 RPAREN shift 37
-
-37 RPAREN reduce 14
-37 NUM reduce 14
-37 ID reduce 14
-37 TRUE reduce 14
-37 NIL reduce 14
-37 LPAREN reduce 14
-
+37 RPAREN reduce 13
+37 NUM reduce 13
+37 ID reduce 13
+37 TRUE reduce 13
+37 NIL reduce 13
+37 LPAREN reduce 13
 38 sexps shift 39
 38 sexp shift 27
 38 NUM shift 6
@@ -294,17 +258,14 @@ ACTIONS
 38 TRUE shift 8
 38 NIL shift 9
 38 LPAREN shift 10
-38 RPAREN reduce 2
-
+38 RPAREN reduce 1
 39 RPAREN shift 40
-
-40 RPAREN reduce 15
-40 NUM reduce 15
-40 ID reduce 15
-40 TRUE reduce 15
-40 NIL reduce 15
-40 LPAREN reduce 15
-
+40 RPAREN reduce 14
+40 NUM reduce 14
+40 ID reduce 14
+40 TRUE reduce 14
+40 NIL reduce 14
+40 LPAREN reduce 14
 41 sexps shift 42
 41 sexp shift 27
 41 NUM shift 6
@@ -312,17 +273,14 @@ ACTIONS
 41 TRUE shift 8
 41 NIL shift 9
 41 LPAREN shift 10
-41 RPAREN reduce 2
-
+41 RPAREN reduce 1
 42 RPAREN shift 43
-
-43 RPAREN reduce 16
-43 NUM reduce 16
-43 ID reduce 16
-43 TRUE reduce 16
-43 NIL reduce 16
-43 LPAREN reduce 16
-
+43 RPAREN reduce 15
+43 NUM reduce 15
+43 ID reduce 15
+43 TRUE reduce 15
+43 NIL reduce 15
+43 LPAREN reduce 15
 44 sexps shift 45
 44 sexp shift 27
 44 NUM shift 6
@@ -330,17 +288,14 @@ ACTIONS
 44 TRUE shift 8
 44 NIL shift 9
 44 LPAREN shift 10
-44 RPAREN reduce 2
-
+44 RPAREN reduce 1
 45 RPAREN shift 46
-
-46 RPAREN reduce 17
-46 NUM reduce 17
-46 ID reduce 17
-46 TRUE reduce 17
-46 NIL reduce 17
-46 LPAREN reduce 17
-
+46 RPAREN reduce 16
+46 NUM reduce 16
+46 ID reduce 16
+46 TRUE reduce 16
+46 NIL reduce 16
+46 LPAREN reduce 16
 47 sexps shift 48
 47 sexp shift 27
 47 NUM shift 6
@@ -348,17 +303,14 @@ ACTIONS
 47 TRUE shift 8
 47 NIL shift 9
 47 LPAREN shift 10
-47 RPAREN reduce 2
-
+47 RPAREN reduce 1
 48 RPAREN shift 49
-
-49 RPAREN reduce 18
-49 NUM reduce 18
-49 ID reduce 18
-49 TRUE reduce 18
-49 NIL reduce 18
-49 LPAREN reduce 18
-
+49 RPAREN reduce 17
+49 NUM reduce 17
+49 ID reduce 17
+49 TRUE reduce 17
+49 NIL reduce 17
+49 LPAREN reduce 17
 50 sexps shift 51
 50 sexp shift 27
 50 NUM shift 6
@@ -366,17 +318,14 @@ ACTIONS
 50 TRUE shift 8
 50 NIL shift 9
 50 LPAREN shift 10
-50 RPAREN reduce 2
-
+50 RPAREN reduce 1
 51 RPAREN shift 52
-
-52 RPAREN reduce 19
-52 NUM reduce 19
-52 ID reduce 19
-52 TRUE reduce 19
-52 NIL reduce 19
-52 LPAREN reduce 19
-
+52 RPAREN reduce 18
+52 NUM reduce 18
+52 ID reduce 18
+52 TRUE reduce 18
+52 NIL reduce 18
+52 LPAREN reduce 18
 53 sexps shift 54
 53 sexp shift 27
 53 NUM shift 6
@@ -384,17 +333,14 @@ ACTIONS
 53 TRUE shift 8
 53 NIL shift 9
 53 LPAREN shift 10
-53 RPAREN reduce 2
-
+53 RPAREN reduce 1
 54 RPAREN shift 55
-
-55 RPAREN reduce 20
-55 NUM reduce 20
-55 ID reduce 20
-55 TRUE reduce 20
-55 NIL reduce 20
-55 LPAREN reduce 20
-
+55 RPAREN reduce 19
+55 NUM reduce 19
+55 ID reduce 19
+55 TRUE reduce 19
+55 NIL reduce 19
+55 LPAREN reduce 19
 56 sexps shift 57
 56 sexp shift 27
 56 NUM shift 6
@@ -402,17 +348,14 @@ ACTIONS
 56 TRUE shift 8
 56 NIL shift 9
 56 LPAREN shift 10
-56 RPAREN reduce 2
-
+56 RPAREN reduce 1
 57 RPAREN shift 58
-
-58 RPAREN reduce 21
-58 NUM reduce 21
-58 ID reduce 21
-58 TRUE reduce 21
-58 NIL reduce 21
-58 LPAREN reduce 21
-
+58 RPAREN reduce 20
+58 NUM reduce 20
+58 ID reduce 20
+58 TRUE reduce 20
+58 NIL reduce 20
+58 LPAREN reduce 20
 59 sexps shift 60
 59 sexp shift 27
 59 NUM shift 6
@@ -420,17 +363,14 @@ ACTIONS
 59 TRUE shift 8
 59 NIL shift 9
 59 LPAREN shift 10
-59 RPAREN reduce 2
-
+59 RPAREN reduce 1
 60 RPAREN shift 61
-
-61 RPAREN reduce 22
-61 NUM reduce 22
-61 ID reduce 22
-61 TRUE reduce 22
-61 NIL reduce 22
-61 LPAREN reduce 22
-
+61 RPAREN reduce 21
+61 NUM reduce 21
+61 ID reduce 21
+61 TRUE reduce 21
+61 NIL reduce 21
+61 LPAREN reduce 21
 62 sexps shift 63
 62 sexp shift 27
 62 NUM shift 6
@@ -438,17 +378,14 @@ ACTIONS
 62 TRUE shift 8
 62 NIL shift 9
 62 LPAREN shift 10
-62 RPAREN reduce 2
-
+62 RPAREN reduce 1
 63 RPAREN shift 64
-
-64 RPAREN reduce 23
-64 NUM reduce 23
-64 ID reduce 23
-64 TRUE reduce 23
-64 NIL reduce 23
-64 LPAREN reduce 23
-
+64 RPAREN reduce 22
+64 NUM reduce 22
+64 ID reduce 22
+64 TRUE reduce 22
+64 NIL reduce 22
+64 LPAREN reduce 22
 65 sexps shift 66
 65 sexp shift 27
 65 NUM shift 6
@@ -456,17 +393,14 @@ ACTIONS
 65 TRUE shift 8
 65 NIL shift 9
 65 LPAREN shift 10
-65 RPAREN reduce 2
-
+65 RPAREN reduce 1
 66 RPAREN shift 67
-
-67 RPAREN reduce 24
-67 NUM reduce 24
-67 ID reduce 24
-67 TRUE reduce 24
-67 NIL reduce 24
-67 LPAREN reduce 24
-
+67 RPAREN reduce 23
+67 NUM reduce 23
+67 ID reduce 23
+67 TRUE reduce 23
+67 NIL reduce 23
+67 LPAREN reduce 23
 68 sexps shift 69
 68 sexp shift 27
 68 NUM shift 6
@@ -474,17 +408,14 @@ ACTIONS
 68 TRUE shift 8
 68 NIL shift 9
 68 LPAREN shift 10
-68 RPAREN reduce 2
-
+68 RPAREN reduce 1
 69 RPAREN shift 70
-
-70 RPAREN reduce 25
-70 NUM reduce 25
-70 ID reduce 25
-70 TRUE reduce 25
-70 NIL reduce 25
-70 LPAREN reduce 25
-
+70 RPAREN reduce 24
+70 NUM reduce 24
+70 ID reduce 24
+70 TRUE reduce 24
+70 NIL reduce 24
+70 LPAREN reduce 24
 71 sexps shift 72
 71 sexp shift 27
 71 NUM shift 6
@@ -492,17 +423,14 @@ ACTIONS
 71 TRUE shift 8
 71 NIL shift 9
 71 LPAREN shift 10
-71 RPAREN reduce 2
-
+71 RPAREN reduce 1
 72 RPAREN shift 73
-
-73 RPAREN reduce 26
-73 NUM reduce 26
-73 ID reduce 26
-73 TRUE reduce 26
-73 NIL reduce 26
-73 LPAREN reduce 26
-
+73 RPAREN reduce 25
+73 NUM reduce 25
+73 ID reduce 25
+73 TRUE reduce 25
+73 NIL reduce 25
+73 LPAREN reduce 25
 74 sexps shift 75
 74 sexp shift 27
 74 NUM shift 6
@@ -510,17 +438,14 @@ ACTIONS
 74 TRUE shift 8
 74 NIL shift 9
 74 LPAREN shift 10
-74 RPAREN reduce 2
-
+74 RPAREN reduce 1
 75 RPAREN shift 76
-
-76 RPAREN reduce 27
-76 NUM reduce 27
-76 ID reduce 27
-76 TRUE reduce 27
-76 NIL reduce 27
-76 LPAREN reduce 27
-
+76 RPAREN reduce 26
+76 NUM reduce 26
+76 ID reduce 26
+76 TRUE reduce 26
+76 NIL reduce 26
+76 LPAREN reduce 26
 77 sexps shift 78
 77 sexp shift 27
 77 NUM shift 6
@@ -528,17 +453,14 @@ ACTIONS
 77 TRUE shift 8
 77 NIL shift 9
 77 LPAREN shift 10
-77 RPAREN reduce 2
-
+77 RPAREN reduce 1
 78 RPAREN shift 79
-
-79 RPAREN reduce 28
-79 NUM reduce 28
-79 ID reduce 28
-79 TRUE reduce 28
-79 NIL reduce 28
-79 LPAREN reduce 28
-
+79 RPAREN reduce 27
+79 NUM reduce 27
+79 ID reduce 27
+79 TRUE reduce 27
+79 NIL reduce 27
+79 LPAREN reduce 27
 80 sexps shift 81
 80 sexp shift 27
 80 NUM shift 6
@@ -546,17 +468,14 @@ ACTIONS
 80 TRUE shift 8
 80 NIL shift 9
 80 LPAREN shift 10
-80 RPAREN reduce 2
-
+80 RPAREN reduce 1
 81 RPAREN shift 82
-
-82 RPAREN reduce 29
-82 NUM reduce 29
-82 ID reduce 29
-82 TRUE reduce 29
-82 NIL reduce 29
-82 LPAREN reduce 29
-
+82 RPAREN reduce 28
+82 NUM reduce 28
+82 ID reduce 28
+82 TRUE reduce 28
+82 NIL reduce 28
+82 LPAREN reduce 28
 83 sexps shift 84
 83 sexp shift 27
 83 NUM shift 6
@@ -564,40 +483,29 @@ ACTIONS
 83 TRUE shift 8
 83 NIL shift 9
 83 LPAREN shift 10
-83 RPAREN reduce 2
-
+83 RPAREN reduce 1
 84 RPAREN shift 85
-
-85 RPAREN reduce 30
-85 NUM reduce 30
-85 ID reduce 30
-85 TRUE reduce 30
-85 NIL reduce 30
-85 LPAREN reduce 30
-
+85 RPAREN reduce 29
+85 NUM reduce 29
+85 ID reduce 29
+85 TRUE reduce 29
+85 NIL reduce 29
+85 LPAREN reduce 29
 86 LAMBDA shift 87
-
 87 LPAREN shift 88
-
 88 params shift 89
 88 ID shift 97
-88 RPAREN reduce 32
-
+88 RPAREN reduce 31
 89 RPAREN shift 90
-
 90 RPAREN shift 91
-
 91 sexp shift 92
 91 NUM shift 6
 91 ID shift 7
 91 TRUE shift 8
 91 NIL shift 9
 91 LPAREN shift 10
-
 92 RPAREN shift 93
-
 93 RPAREN shift 94
-
 94 sexps shift 95
 94 sexp shift 27
 94 NUM shift 6
@@ -605,21 +513,16 @@ ACTIONS
 94 TRUE shift 8
 94 NIL shift 9
 94 LPAREN shift 10
-94 RPAREN reduce 2
-
+94 RPAREN reduce 1
 95 RPAREN shift 96
-
-96 RPAREN reduce 31
-96 NUM reduce 31
-96 ID reduce 31
-96 TRUE reduce 31
-96 NIL reduce 31
-96 LPAREN reduce 31
-
+96 RPAREN reduce 30
+96 NUM reduce 30
+96 ID reduce 30
+96 TRUE reduce 30
+96 NIL reduce 30
+96 LPAREN reduce 30
 97 params shift 98
 97 ID shift 97
-97 RPAREN reduce 32
-
-98 RPAREN reduce 33
-
+97 RPAREN reduce 31
+98 RPAREN reduce 32
 99 RPAREN shift 14
