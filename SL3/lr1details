@@ -1,406 +1,398 @@
 0
-start -> * BOF LP sexp RP EOF
+start -> * BOF sexp EOF
 
 1
-start -> BOF * LP sexp RP EOF
-
-2
-start -> BOF LP * sexp RP EOF
+start -> BOF * sexp EOF
 sexp -> * NUM
 //And the rest of the sexp
 
+2
+start -> BOF sexp * EOF
+
 3
-start -> BOF LP sexp * RP EOF
+start -> BOF sexp EOF *
 
 4
-start -> BOF LP sexp RP * EOF
-
-5
-start -> BOF LP sexp RP EOF *
-
-6
 sexp -> NUM *
 
-7
+5
 sexp -> ID *
 
-8
+6
 sexp -> TRUE *
 
-9
+7
 sexp -> NIL *
 
-10
+8
 sexp -> LP * COND sexp sexp sexp RP
 sexp -> LP * VAR
 sexp -> LP * PLUS
 sexp -> LP * .....
 
-11
+9
 sexp -> LP COND * sexp sexp sexp RP
 sexp -> * NUM
 sexp -> * .....
 
-12
+10
 sexp -> LP COND sexp * sexp sexp RP
 sexp -> * NUM
 sexp -> * .....
 
-13
+11
 sexp -> LP COND sexp sexp * sexp RP
 sexp -> * NUM
 sexp -> * .....
 
-99
+12
 sexp -> LP COND sexp sexp sexp * RP
 
-14
+13
 sexp -> LP COND sexp sexp sexp RP *
 
-15
+14
 sexp -> LP VAR * ID sexp RP
 
-16
+15
 sexp -> LP VAR ID * sexp RP
 sexp -> * NUM
 sexp -> * ........
 
-17
+16
 sexp -> LP VAR ID sexp * RP
 
-18
+17
 sexp -> LP VAR ID sexp RP *
 
-19
+18
 sexp -> LP DEFINE * ID sexp RP
 
-20
+19
 sexp -> LP DEFINE ID * sexp RP
 
-21
+20
 sexp -> LP DEFINE ID sexp * RP
 
-22
+21
 sexp -> LP DEFINE ID sexp RP *
 
-23
-sexp -> LP * PLUS sexps RP
-
-24
+22
 sexp -> LP PLUS * sexps RP
 sexps -> *
 sexps -> * sexp sexps
 sexp -> * NUM
 sexp -> * ........
+//TODO
 
-25
+23
 sexp -> LP PLUS sexps * RP
 
-26
+24
 sexp -> LP PLUS sexps RP *
 
-27
+25
 sexps -> sexp * sexps
 sexps -> *
 sexps -> * sexp sexps
 sexp -> * NUM
 sexp -> * ........
 
-28
+26
 sexps -> sexp sexps *
 
-29
+27
 sexp -> LP MINUS * sexps RP
 sexps -> *
 sexps -> * sexp sexps
 sexp -> * NUM
 sexp -> * ........
 
-30
+28
 sexp -> LP MINUS sexps * RP
 
-31
+29
 sexp -> LP MINUS sexps RP *
 
-32
+30
 sexp -> LP STAR * sexps RP
 sexps -> *
 sexps -> * sexp sexps
 sexp -> * NUM
 sexp -> * .......
 
-33
+31
 sexp -> LP STAR sexps * RP
 
-34
+32
 sexp -> LP STAR sexps RP *
 
-35
+33
 sexp -> LP SLASH * sexps RP
 sexps -> *
 sexps -> * sexp sexps
 sexp -> * NUM
 sexp -> * .......
 
-36
+34
 sexp -> LP SLASH sexps * RP
 
-37
+35
 sexp -> LP SLASH sexps RP *
 
-38
+36
 sexp -> LP MOD * sexps RP
 sexps -> *
 sexps -> * sexp sexps
 sexp -> * NUM
 sexp -> * .......
 
-39
+37
 sexp -> LP MOD sexps * RP
 
-40
+38
 sexp -> LP MOD sexps RP *
 
-41
+39
 sexp -> LP EQ * sexps RP
 sexps -> *
 sexps -> * sexp sexps
 sexp -> * NUM
 sexp -> * .......
 
-42
+40
 sexp -> LP EQ sexps * RP
 
-43
+41
 sexp -> LP EQ sexps RP *
 
-44
+42
 sexp -> LP NE * sexps RP
 sexps -> *
 sexps -> * sexp sexps
 sexp -> * NUM
 sexp -> * .......
 
-45
+43
 sexp -> LP NE sexps * RP
 
-46
+44
 sexp -> LP NE sexps RP *
 
-47
+45
 sexp -> LP LT * sexps RP
 sexps -> *
 sexps -> * sexp sexps
 sexp -> * NUM
 sexp -> * .......
 
-48
+46
 sexp -> LP LT sexps * RP
 
-49
+47
 sexp -> LP LT sexps RP *
 
-50
+48
 sexp -> LP GT * sexps RP
 sexps -> *
 sexps -> * sexp sexps
 sexp -> * NUM
 sexp -> * .......
 
-51
+49
 sexp -> LP GT sexps * RP
 
-52
+50
 sexp -> LP GT sexps RP *
 
-53
+51
 sexp -> LP LE * sexps RP
 sexps -> *
 sexps -> * sexp sexps
 sexp -> * NUM
 sexp -> * .......
 
-54
+52
 sexp -> LP LE sexps * RP
 
-55
+53
 sexp -> LP LE sexps RP *
 
-56
+54
 sexp -> LP GE * sexps RP
 sexps -> *
 sexps -> * sexp sexps
 sexp -> * NUM
 sexp -> * .......
 
-57
+55
 sexp -> LP GE sexps * RP
 
-58
+56
 sexp -> LP GE sexps RP *
 
-59
+57
 sexp -> LP AND * sexps RP
 sexps -> *
 sexps -> * sexp sexps
 sexp -> * NUM
 sexp -> * .......
 
-60
+58
 sexp -> LP AND sexps * RP
 
-61
+59
 sexp -> LP AND sexps RP *
 
-62
+60
 sexp -> LP OR * sexps RP
 sexps -> *
 sexps -> * sexp sexps
 sexp -> * NUM
 sexp -> * .......
 
-63
+61
 sexp -> LP OR sexps * RP
 
-64
+62
 sexp -> LP OR sexps RP *
 
-65
+63
 sexp -> LP NOT * sexps RP
 sexps -> *
 sexps -> * sexp sexps
 sexp -> * NUM
 sexp -> * .......
 
-66
+64
 sexp -> LP NOT sexps * RP
 
-67
+65
 sexp -> LP NOT sexps RP *
 
-68
+66
 sexp -> LP LOGAND * sexps RP
 sexps -> *
 sexps -> * sexp sexps
 sexp -> * NUM
 sexp -> * .......
 
-69
+67
 sexp -> LP LOGAND sexps * RP
 
-70
+68
 sexp -> LP LOGAND sexps RP *
 
-71
+69
 sexp -> LP LOGIOR * sexps RP
 sexps -> *
 sexps -> * sexp sexps
 sexp -> * NUM
 sexp -> * .......
 
-72
+70
 sexp -> LP LOGIOR sexps * RP
 
-73
+71
 sexp -> LP LOGIOR sexps RP *
 
-74
+72
 sexp -> LP LOGXOR * sexps RP
 sexps -> *
 sexps -> * sexp sexps
 sexp -> * NUM
 sexp -> * .......
 
-75
+73
 sexp -> LP LOGXOR sexps * RP
 
-76
+74
 sexp -> LP LOGXOR sexps RP *
 
-77
+75
 sexp -> LP LOGNOR * sexps RP
 sexps -> *
 sexps -> * sexp sexps
 sexp -> * NUM
 sexp -> * .......
 
-78
+76
 sexp -> LP LOGNOR sexps * RP
 
-79
+77
 sexp -> LP LOGNOR sexps RP *
 
-80
+78
 sexp -> LP LOGEQV * sexps RP
 sexps -> *
 sexps -> * sexp sexps
 sexp -> * NUM
 sexp -> * .......
 
-81
+79
 sexp -> LP LOGEQV sexps * RP
 
-82
+80
 sexp -> LP LOGEQV sexps RP *
 
-83
+81
 sexp -> LP WRITE * sexps RP
 sexps -> *
 sexps -> * sexp sexps
 sexp -> * NUM
 sexp -> * .......
 
-84
+82
 sexp -> LP WRITE sexps * RP
 
-85
+83
 sexp -> LP WRITE sexps RP *
 
-86
+84
 sexp -> LP LP * LAMBDA LP params RP RP sexp RP RP sexps RP
 
-87
+85
 sexp -> LP LP LAMBDA * LP params RP RP sexp RP RP sexps RP
 
-88
+86
 sexp -> LP LP LAMBDA LP * params RP RP sexp RP RP sexps RP
 params -> *
 params -> * ID params
 
-89
+87
 sexp -> LP LP LAMBDA LP params * RP RP sexp RP RP sexps RP
 
-90
+88
 sexp -> LP LP LAMBDA LP params RP * RP sexp RP RP sexps RP
 
-91
+89
 sexp -> LP LP LAMBDA LP params RP RP * sexp RP RP sexps RP
 sexp -> * NUM
 sexp -> * .......
 
-92
+90
 sexp -> LP LP LAMBDA LP params RP RP sexp * RP RP sexps RP
 
-93
+91
 sexp -> LP LP LAMBDA LP params RP RP sexp RP * RP sexps RP
 
-94
+92
 sexp -> LP LP LAMBDA LP params RP RP sexp RP RP * sexps RP
 sexps -> *
 sexps -> * sexp sexps
 sexp -> * NUM
 sexp -> * .......
 
-95
+93
 sexp -> LP LP LAMBDA LP params RP RP sexp RP RP sexps * RP
 
-96
+94
 sexp -> LP LP LAMBDA LP params RP RP sexp RP RP sexps RP *
 
-97
+95
 params -> ID * params
 params -> *
 params -> * ID params
 
-98
+96
 params -> ID params *

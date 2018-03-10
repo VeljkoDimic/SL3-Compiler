@@ -93,6 +93,7 @@ State DFA::transition(State state, char next_char) const {
         else if (c == '-')      return MINUS;
         else if (c == '*')      return STAR;
         else if (c == '/')      return SLASH;
+        else if (c == '%')      return MOD;
         else if (c == '<')      return LT;
         else if (c == '>')      return GT;
         else if (isalpha(c))    return ID;
