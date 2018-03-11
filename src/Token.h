@@ -1,9 +1,7 @@
 #ifndef TOKEN_H
 #define TOKEN_H
+
 #include "States.h"
-
-//namespace SL3 {
-
 
 class Token {
     private:
@@ -20,6 +18,5 @@ class Token {
         long long toLong() const;
         int toInt() const;
 };
-//} //End Namespace
 
 #endif

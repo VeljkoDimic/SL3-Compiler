@@ -17,6 +17,7 @@ class DFA {
         std::vector<Token> simplifiedMaximalMunch(std::string input) const;
     public:
         DFA();
+        ~DFA();
 
         // Return the next state based on current state and next character
         State transition(State state, char next_char) const;

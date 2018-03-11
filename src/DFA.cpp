@@ -47,7 +47,7 @@ std::vector<Token> DFA::simplifiedMaximalMunch(std::string input) const {
 };
 
 DFA::DFA() {
-accepting_states = new std::set<State>{
+    accepting_states = new std::set<State>{
                             NUM,
                             ID,
                             WHITESPACE,
@@ -79,6 +79,10 @@ accepting_states = new std::set<State>{
                             WRITE,
                             LAMBDA
                     };
+};
+
+DFA::~DFA() {
+    delete accepting_states;
 };
 
 // Return the next state based on current state and next character
