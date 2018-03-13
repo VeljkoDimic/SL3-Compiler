@@ -30,6 +30,9 @@ class LR1 {
         // LR1 actions
         Actions actions;
 
+        // Number of states in the LR1 file
+        int num_states;
+
         // Symbol stack
         std::stack<Node> symbol_stack;
 
