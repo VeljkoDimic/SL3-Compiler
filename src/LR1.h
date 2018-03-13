@@ -1,19 +1,19 @@
 #ifndef LR1_H
-#define LR1_h
+#define LR1_H
 
 #include <stack>
 #include <string>
 #include <set>
 #include <vector>
 #include "Production.h"
-#include "Lr1Node.h"
+#include "Node.h"
 #include "Token.h"
-
-typedef Lr1Node Node;
-typedef std::map<std::pair<int, std::string>,
-                 std::pair<std::string, int>> Actions;
+#include "Utils.h"
 
 class LR1 {
+    typedef std::map<std::pair<int, std::string>,
+                     std::pair<std::string, int>> Actions;
+
     private:
         // Terminal symbols
         std::set<std::string> terminals;
@@ -41,7 +41,7 @@ class LR1 {
     public:
         LR1();
         LR1(std::string file_name);
-        Node Parse(std::vector<Token> tokens) const;
-}
+        Node Parse(std::vector<Token> tokens);
+};
 
 #endif

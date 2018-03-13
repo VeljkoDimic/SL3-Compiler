@@ -35,4 +35,4 @@ std::map<State, std::string> state_string = {
         {VAR, "VAR"},
         {WRITE, "WRITE"},
         {LAMBDA, "LAMBDA"}
-        };
+    };

@@ -1,5 +1,5 @@
 #ifndef PRODUCTION_H
-#define PRODUCTION_h
+#define PRODUCTION_H
 
 #include <string>
 #include <vector>
@@ -7,9 +7,6 @@
 
 class Production {
     private:
-        // Number of symbols on the rhs
-        int size;
-
         // Left hand side
         std::string lhs;
 
@@ -19,14 +16,14 @@ class Production {
         // Creates the productions, where string is in form "sexps sexp sexps"
         Production(std::string prod);
 
-        // Get size
-        int size() const;
+        // Number of symbols on the rhs
+        int size;
 
         // Get lhs
         std::string getLhs() const;
 
         // << overload
         friend std::ostream& operator<< (std::ostream &strm, const Production &a);
-}
+};
 
 #endif

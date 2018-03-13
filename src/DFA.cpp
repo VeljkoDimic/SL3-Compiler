@@ -37,17 +37,18 @@ std::vector<Token> DFA::simplifiedMaximalMunch(std::string input) const {
                 if (failed(state)) {
                     munched_input += *position;
                 }
-                throw ScanningFailure("ERROR: Simplified maximal munch failed on input: "
+                throw ScanningFailure("SCANNING ERROR: Simplified maximal "
+                        "munch failed on input: "
                         + munched_input);
             }
         }
     }
 
     return result;
-};
+}
 
 DFA::DFA() {
-    accepting_states = new std::set<State>{
+    accepting_states = std::set<State>{
                             NUM,
                             ID,
                             WHITESPACE,
@@ -79,11 +80,7 @@ DFA::DFA() {
                             WRITE,
                             LAMBDA
                     };
-};
-
-DFA::~DFA() {
-    delete accepting_states;
-};
+}
 
 // Return the next state based on current state and next character
 State DFA::transition(State state, char next_char) const {
@@ -116,22 +113,22 @@ State DFA::transition(State state, char next_char) const {
         if (isspace(c))         return WHITESPACE;
     }
     return FAIL;
-};
+}
 
 // Return if the state returned from transition is a failure
 bool DFA::failed(State state) const {
     return state == FAIL;
-};
+}
 
 // Return if the state returned from transition is accepting
 bool DFA::accept(State state) const {
-    return accepting_states->end() != accepting_states->find(state);
-};
+    return accepting_states.end() != accepting_states.find(state);
+}
 
 // Return starting state of DFA
 State DFA::start() const {
     return START;
-};
+}
 
 // Scans the input and returns the list of tokens
 std::vector<Token> DFA::scan(std::string input) const {
@@ -170,4 +167,4 @@ std::vector<Token> DFA::scan(std::string input) const {
             tokens.end());
 
     return tokens;
-};
+}

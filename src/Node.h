@@ -1,11 +1,11 @@
-#ifndef LR1_NODE_H
-#define LR1_NODE_h
+#ifndef NODE_H
+#define NODE_H
 
 #include <vector>
 #include <string>
-#include "LR1.h"
+#include "Utils.h"
 
-class Lr1Node {
+class Node {
     private:
         // Child nodes
         std::vector<Node> children;
@@ -21,6 +21,6 @@ class Lr1Node {
 
         // << overload
         friend std::ostream& operator<< (std::ostream &strm, const Node &a);
-}
+};
 
 #endif

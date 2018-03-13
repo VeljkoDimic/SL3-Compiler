@@ -13,19 +13,16 @@ Production::Production(std::string prod) {
     //Pop front and set to rhs
     tokens.erase(tokens.begin());
     rhs = tokens;
-};
+}
 
-int Production::size() const {
-    return size;
-};
-
-std::string Productions::getLhs() const {
+std::string Production::getLhs() const {
     return lhs;
-};
+}
 
 std::ostream& operator<< (std::ostream &strm, const Production &a) {
-    strm << lhs;
-    for (std::string symbol : rhs) {
+    strm << a.lhs;
+    for (std::string symbol : a.rhs) {
         strm << ' ' << symbol;
     }
-};
+    return strm;
+}
