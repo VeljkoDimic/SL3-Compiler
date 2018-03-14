@@ -11,6 +11,7 @@ class Token {
         Token(State kind, std::string lexeme);
 
         State getKind() const;
+        std::string getKindString() const;
         std::string getLexeme() const;
 
         friend std::ostream& operator<< (std::ostream &strm, const Token &a);

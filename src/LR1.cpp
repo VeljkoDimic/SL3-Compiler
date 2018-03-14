@@ -2,6 +2,8 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <sstream>
+#include <list>
 #include "Node.h"
 #include "ParsingFailure.h"
 
@@ -103,5 +105,67 @@ LR1::LR1(std::string file_name) {
 }
 
 Node LR1::Parse(std::vector<Token> tokens) {
+    //Copy tokens to liste
+    std::list<Token> unread_input;
+
+    //Resize to avoid reallocating multiple times
+    //unread_input.resize(tokens.size());
+    std::copy(std::begin(tokens), std::end(tokens),
+              std::end(unread_input));
+
+    //TODO: Change back to stack of Nodes
+    //Shift |- onto symbol stack
+    symbol_stack.push(unread_input.front().getKindString());
+    unread_input.pop_front();
+    state_stack.push(0);
+
+    //Push sigma(q0, |-) on state stack
+    auto act = actions.find(std::make_pair(
+                state_stack.top(), symbol_stack.top()));
+    if (act == actions.end()) {
+        throw ParsingFailure("PARSING ERROR: Unable to find "
+                "action at state " + std::to_string(state_stack.top()) +
+                " and symbol " + symbol_stack.top());
+    }
+    if (std::strcmp(act->second.first.c_str(), "reduce") == 0) {
+        throw ParsingFailure("PARSING ERROR: Attempting to reduce "
+                "at start state");
+    }
+    state_stack.push(act->second.second);
+
+    //For each token a in input
+    for (auto unread_token : unread_input) {
+        std::string unread_symbol = unread_token.getKindString();
+
+        /* ___ REDUCE ___ */
+        //while (there is a reduction A -> gamma. {a} in state_stack.top )
+        //TODO: Make this a lot more elegant
+        while(actions.find(std::make_pair(
+                        state_stack.top(), unread_symbol))
+                    != actions.end() &&
+                strcmp(actions[std::make_pair(
+                        state_stack.top(), unread_symbol)]
+                    .first.c_str(), "reduce") == 0) {
+            std::pair<std::string, int> a =
+                actions[std::make_pair(state_stack.top(), unread_symbol)];
+
+            Production gamma = productions.at(a.second);
+            int magnitude_gamma = gamma.size;
+
+            std::stringstream production_ss;
+            production_ss << gamma;
+            Node new_node(production_ss.str());
+
+            //Pop |gamma| symbols off the stack
+            for (int i = 0; i < magnitude_gamma; ++i) {
+                //new_node.AddChild(Node())
+            }
+        }
+    }
+
+
+
+
+
     return Node("");
 }

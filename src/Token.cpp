@@ -13,6 +13,10 @@ State Token::getKind() const {
     return kind;
 }
 
+std::string Token::getKindString() const {
+    return state_string[kind];
+}
+
 std::string Token::getLexeme() const {
     return lexeme;
 }
