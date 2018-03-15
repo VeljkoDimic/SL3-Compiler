@@ -96,6 +96,18 @@ void LR1::ReadLr1(std::string file_name) {
     }
 }
 
+std::pair<std::string, int> LR1::TopAction() const {
+    auto act = actions.find(std::make_pair(
+                        state_stack.top(),
+                        symbol_stack.top().getProduction().getLhs()));
+    if (act == actions.end()) {
+        throw ParsingFailure("PARSING ERROR: Unable to find "
+                "action at state " + std::to_string(state_stack.top()) +
+                " and symbol " + symbol_stack.top().getProduction().getLhs());
+    }
+    return act->second;
+}
+
 LR1::LR1() {
     ReadLr1("SL3.lr1");
 }
@@ -116,19 +128,12 @@ Node LR1::Parse(std::vector<Token> tokens) {
     state_stack.push(0);
 
     //Push sigma(q0, |-) on state stack
-    auto act = actions.find(std::make_pair(
-                        state_stack.top(),
-                        symbol_stack.top().getProduction().getLhs()));
-    if (act == actions.end()) {
-        throw ParsingFailure("PARSING ERROR: Unable to find "
-                "action at state " + std::to_string(state_stack.top()) +
-                " and symbol " + symbol_stack.top().getProduction().getLhs());
-    }
-    if (std::strcmp(act->second.first.c_str(), "reduce") == 0) {
+    std::pair<std::string, int> first_action = TopAction();
+    if (std::strcmp(first_action.first.c_str(), "reduce") == 0) {
         throw ParsingFailure("PARSING ERROR: Attempting to reduce "
                 "at start state");
     }
-    state_stack.push(act->second.second);
+    state_stack.push(first_action.second);
 
     //For each token a in input
     for (auto unread_token : unread_input) {
@@ -153,16 +158,53 @@ Node LR1::Parse(std::vector<Token> tokens) {
             production_ss << gamma;
             Node new_node(production_ss.str());
 
-            //Pop |gamma| symbols off the stack
+            //Pop |gamma| symbols & states off the stack
             for (int i = 0; i < magnitude_gamma; ++i) {
-                //new_node.AddChild(Node())
+                new_node.AddChild(symbol_stack.top());
+                symbol_stack.pop();
+                state_stack.pop();
+            }
+
+            //Push A on symbol stack
+            symbol_stack.push(new_node);
+
+            //Push sigma(state_stack.top, A) onto the state_stack
+            //Shift if it is a shift action, otherwise go back through loop
+            std::pair<std::string, int> curr_action = TopAction();
+            if (std::strcmp(first_action.first.c_str(), "shift") == 0) {
+                state_stack.push(curr_action.second);
             }
         }
+        /* ___ END REDUCE ___ */
+
+        /* ___ SHIFT ___ */
+        //Shift a onto symbol stack
+        symbol_stack.push(Node(unread_token));
+
+        //if (sigma(state_stack.top, a) == undefined) report parse error
+        std::pair<std::string, int> curr_action = TopAction();
+        if (std::strcmp(first_action.first.c_str(), "reduce") == 0) {
+            throw ParsingFailure("PARSING ERROR: Attempting to reduce "
+                    "at shift state at state " +
+                    std::to_string(state_stack.top()) + "and symbol " +
+                    symbol_stack.top().getProduction().getLhs());
+        }
+        //else push sigma(state_stack.top, a) onto the state_stack
+        state_stack.push(curr_action.second);
     }
 
+    //If it is done, add start state
+    if (symbol_stack.top().getProduction().getLhs() != "EOF") {
+        throw ParsingFailure("PARSING ERROR: Reached end of file "
+                "without 'EOF' symbol on stack");
+    }
+    //TODO: Remove hardcoding
+    Node new_node = Node("start BOF sexp EOF");
+    while (!symbol_stack.empty()) {
+        new_node.AddChild(symbol_stack.top());
+        symbol_stack.pop();
+    }
+    symbol_stack.push(new_node);
 
-
-
-
-    return Node("");
+    return symbol_stack.top();
 }

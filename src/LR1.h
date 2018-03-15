@@ -41,6 +41,9 @@ class LR1 {
 
         // Reads a .lr1 file and populates LR1
         void ReadLr1(std::string file_name);
+
+        // actions[state_stack.head, symbol_stack.head]
+        std::pair<std::string, int> TopAction() const;
     public:
         LR1();
         LR1(std::string file_name);
