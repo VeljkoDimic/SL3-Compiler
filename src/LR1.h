@@ -34,7 +34,7 @@ class LR1 {
         int num_states;
 
         // Symbol stack
-        std::stack<std::string> symbol_stack;
+        std::stack<Node> symbol_stack;
 
         // State stack
         std::stack<int> state_stack;

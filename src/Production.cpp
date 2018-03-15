@@ -4,6 +4,11 @@
 #include "Production.h"
 #include "Utils.h"
 
+Production::Production() {
+    lhs = "";
+    rhs = std::vector<std::string>();
+}
+
 Production::Production(std::string prod) {
     std::vector<std::string> tokens = Utils::split(prod, ' ');
 

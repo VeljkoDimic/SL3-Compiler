@@ -13,6 +13,9 @@ class Production {
         // Right hand side
         std::vector<std::string> rhs;
     public:
+        // Default empty constructor. Should not need to be used
+        Production();
+
         // Creates the productions, where string is in form "sexps sexp sexps"
         Production(std::string prod);
 

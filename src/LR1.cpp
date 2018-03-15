@@ -105,27 +105,24 @@ LR1::LR1(std::string file_name) {
 }
 
 Node LR1::Parse(std::vector<Token> tokens) {
-    //Copy tokens to liste
+    //Copy tokens to list
     std::list<Token> unread_input;
-
-    //Resize to avoid reallocating multiple times
-    //unread_input.resize(tokens.size());
     std::copy(std::begin(tokens), std::end(tokens),
               std::end(unread_input));
 
-    //TODO: Change back to stack of Nodes
     //Shift |- onto symbol stack
-    symbol_stack.push(unread_input.front().getKindString());
+    symbol_stack.push(Node(unread_input.front()));
     unread_input.pop_front();
     state_stack.push(0);
 
     //Push sigma(q0, |-) on state stack
     auto act = actions.find(std::make_pair(
-                state_stack.top(), symbol_stack.top()));
+                        state_stack.top(),
+                        symbol_stack.top().getProduction().getLhs()));
     if (act == actions.end()) {
         throw ParsingFailure("PARSING ERROR: Unable to find "
                 "action at state " + std::to_string(state_stack.top()) +
-                " and symbol " + symbol_stack.top());
+                " and symbol " + symbol_stack.top().getProduction().getLhs());
     }
     if (std::strcmp(act->second.first.c_str(), "reduce") == 0) {
         throw ParsingFailure("PARSING ERROR: Attempting to reduce "
