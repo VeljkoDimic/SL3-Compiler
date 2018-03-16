@@ -36,7 +36,9 @@ enum State {
     COND,
     VAR,
     WRITE,
-    LAMBDA
+    LAMBDA,
+    BOF,
+    EEOF
 };
 
 extern std::map<State, std::string> state_string;

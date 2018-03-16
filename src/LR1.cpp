@@ -6,6 +6,7 @@
 #include <list>
 #include "Node.h"
 #include "ParsingFailure.h"
+#include "States.h"
 
 void LR1::ReadLr1(std::string file_name) {
     std::ifstream lr1(file_name);
@@ -120,7 +121,9 @@ Node LR1::Parse(std::vector<Token> tokens) {
     //Copy tokens to list
     std::list<Token> unread_input;
     std::copy(std::begin(tokens), std::end(tokens),
-              std::end(unread_input));
+              std::back_inserter(unread_input));
+    unread_input.push_front(Token(BOF, "BOF"));
+    unread_input.push_back(Token(EEOF, "EOF"));
 
     //Shift |- onto symbol stack
     symbol_stack.push(Node(unread_input.front()));

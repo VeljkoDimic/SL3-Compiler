@@ -34,5 +34,7 @@ std::map<State, std::string> state_string = {
         {COND, "COND"},
         {VAR, "VAR"},
         {WRITE, "WRITE"},
-        {LAMBDA, "LAMBDA"}
+        {LAMBDA, "LAMBDA"},
+        {BOF, "BOF"},
+        {EEOF, "EOF"}
     };

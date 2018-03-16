@@ -6,6 +6,7 @@
 #include "Utils.h"
 #include "LR1.h"
 #include "DFA.h"
+#include "Node.h"
 #include "ScanningFailure.h"
 #include "ParsingFailure.h"
 
@@ -39,6 +40,8 @@ int main(int argc, char** argv) {
     // Parsing
     try {
         LR1 lr1("SL3.lr1");
+        Node root = lr1.Parse(tokens);
+        std::cout << root << std::endl;
     } catch (ParsingFailure &f) {
         std::cerr << f.getMessage() << std::endl;
         return 1;

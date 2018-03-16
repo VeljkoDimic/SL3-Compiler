@@ -10,7 +10,7 @@ Node::Node(Token t) {
 };
 
 void Node::AddChild(Node n) {
-    children.push_back(n);
+    children.push_front(n);
 }
 
 Production Node::getProduction() const {

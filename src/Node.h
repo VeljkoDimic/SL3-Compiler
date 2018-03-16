@@ -1,7 +1,7 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include <vector>
+#include <list>
 #include <string>
 #include "Utils.h"
 #include "Token.h"
@@ -10,7 +10,7 @@
 class Node {
     private:
         // Child nodes
-        std::vector<Node> children;
+        std::list<Node> children;
 
         // Production data initialized, ie "sexps sexp sexps"
         Production production;
