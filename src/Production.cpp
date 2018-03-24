@@ -24,6 +24,10 @@ std::string Production::getLhs() const {
     return lhs;
 }
 
+std::vector<std::string> Production::getRhs() const {
+    return rhs;
+}
+
 std::ostream& operator<< (std::ostream &strm, const Production &a) {
     strm << a.lhs;
     for (std::string symbol : a.rhs) {

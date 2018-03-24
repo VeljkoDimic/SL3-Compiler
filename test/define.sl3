@@ -1,0 +1,1 @@
+(+ (define FIVE (- 7 2)) 3 FIVE)

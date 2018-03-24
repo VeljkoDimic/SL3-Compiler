@@ -25,6 +25,9 @@ class Production {
         // Get lhs
         std::string getLhs() const;
 
+        // Get rhs
+        std::vector<std::string> getRhs() const;
+
         // << overload
         friend std::ostream& operator<< (std::ostream &strm, const Production &a);
 };

@@ -103,6 +103,8 @@ State DFA::transition(State state, char next_char) const {
     } else if (state == ID) {
         if (isdigit(c)
                 || isalpha(c))  return ID;
+    } else if (state == MINUS) {
+        if (isdigit(c)&&c!='0') return NUM;
     } else if (state == SLASH) {
         if (c == '=')           return NE;
     } else if (state == LT) {
