@@ -100,11 +100,11 @@ void LR1::ReadLr1(std::string file_name) {
 std::pair<std::string, int> LR1::TopAction() const {
     auto act = actions.find(std::make_pair(
                         state_stack.top(),
-                        symbol_stack.top().getProduction().getLhs()));
+                        symbol_stack.top()->getProduction().getLhs()));
     if (act == actions.end()) {
         throw ParsingFailure("PARSING ERROR: Unable to find "
                 "action at state " + std::to_string(state_stack.top()) +
-                " and symbol " + symbol_stack.top().getProduction().getLhs());
+                " and symbol " + symbol_stack.top()->getProduction().getLhs());
     }
     return act->second;
 }
@@ -117,7 +117,14 @@ LR1::LR1(std::string file_name) {
     ReadLr1(file_name);
 }
 
-Node LR1::Parse(std::vector<Token> tokens) {
+LR1::~LR1() {
+    while (!symbol_stack.empty()) {
+        delete symbol_stack.top();
+        symbol_stack.pop();
+    }
+}
+
+Node* LR1::Parse(std::vector<Token> tokens) {
     //Copy tokens to list
     std::list<Token> unread_input;
     std::copy(std::begin(tokens), std::end(tokens),
@@ -126,7 +133,7 @@ Node LR1::Parse(std::vector<Token> tokens) {
     unread_input.push_back(Token(EEOF, "EOF"));
 
     //Shift |- onto symbol stack
-    symbol_stack.push(Node(unread_input.front()));
+    symbol_stack.push(new Node(unread_input.front()));
     unread_input.pop_front();
     state_stack.push(0);
 
@@ -159,11 +166,11 @@ Node LR1::Parse(std::vector<Token> tokens) {
 
             std::stringstream production_ss;
             production_ss << gamma;
-            Node new_node(production_ss.str());
+            Node* new_node = new Node(production_ss.str());
 
             //Pop |gamma| symbols & states off the stack
             for (int i = 0; i < magnitude_gamma; ++i) {
-                new_node.AddChild(symbol_stack.top());
+                new_node->AddChild(symbol_stack.top());
                 symbol_stack.pop();
                 state_stack.pop();
             }
@@ -182,7 +189,7 @@ Node LR1::Parse(std::vector<Token> tokens) {
 
         /* ___ SHIFT ___ */
         //Shift a onto symbol stack
-        symbol_stack.push(Node(unread_token));
+        symbol_stack.push(new Node(unread_token));
 
         //if (sigma(state_stack.top, a) == undefined) report parse error
         std::pair<std::string, int> curr_action = TopAction();
@@ -190,21 +197,21 @@ Node LR1::Parse(std::vector<Token> tokens) {
             throw ParsingFailure("PARSING ERROR: Attempting to reduce "
                     "at shift state at state " +
                     std::to_string(state_stack.top()) + "and symbol " +
-                    symbol_stack.top().getProduction().getLhs());
+                    symbol_stack.top()->getProduction().getLhs());
         }
         //else push sigma(state_stack.top, a) onto the state_stack
         state_stack.push(curr_action.second);
     }
 
     //If it is done, add start state
-    if (symbol_stack.top().getProduction().getLhs() != "EOF") {
+    if (symbol_stack.top()->getProduction().getLhs() != "EOF") {
         throw ParsingFailure("PARSING ERROR: Reached end of file "
                 "without 'EOF' symbol on stack");
     }
     //TODO: Remove hardcoding
-    Node new_node = Node("start BOF sexp EOF");
+    Node* new_node = new Node("start BOF sexp EOF");
     while (!symbol_stack.empty()) {
-        new_node.AddChild(symbol_stack.top());
+        new_node->AddChild(symbol_stack.top());
         symbol_stack.pop();
     }
     symbol_stack.push(new_node);

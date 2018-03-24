@@ -7,9 +7,15 @@ Node::Node(std::string prod) {
 
 Node::Node(Token t) {
     production = Production(t.getKindString() + ' ' + t.getLexeme());
-};
+}
 
-void Node::AddChild(Node n) {
+Node::~Node() {
+    for (Node* n : children) {
+        delete n;
+    }
+}
+
+void Node::AddChild(Node* n) {
     children.push_front(n);
 }
 
@@ -19,8 +25,8 @@ Production Node::getProduction() const {
 
 std::ostream& operator<< (std::ostream &strm, const Node &a) {
     strm << a.production << std::endl;
-    for (Node n : a.children) {
-        strm << n;
+    for (Node* n : a.children) {
+        strm << *n;
     }
     return strm;
 }

@@ -15,7 +15,7 @@ class LLVMGen {
         int instruction;
 
         // Return code of node n
-        std::string code(Node n);
+        std::string code(Node* n);
 
         // Return code required to print a number
         std::string printNumCode(int i);
@@ -27,7 +27,7 @@ class LLVMGen {
         std::string footer() const;
     public:
         // Constructor, where n is the root of the parsed sl3
-        LLVMGen(Node n);
+        LLVMGen(Node* n);
 
         // Get code
         std::string getLlvm() const;

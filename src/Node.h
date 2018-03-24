@@ -1,7 +1,7 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include <list>
+#include <deque>
 #include <string>
 #include "Utils.h"
 #include "Token.h"
@@ -10,7 +10,7 @@
 class Node {
     private:
         // Child nodes
-        std::list<Node> children;
+        std::deque<Node*> children;
 
         // Production data initialized, ie "sexps sexp sexps"
         Production production;
@@ -18,11 +18,14 @@ class Node {
         // Initializes with production
         Node(std::string prod);
 
+        // Destructor
+        virtual ~Node();
+
         // Initialize with token (ie "ID 5")
         Node(Token t);
 
         // Add child Node to children
-        void AddChild(Node n);
+        void AddChild(Node* n);
 
         Production getProduction() const;
 

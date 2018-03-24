@@ -34,7 +34,7 @@ class LR1 {
         int num_states;
 
         // Symbol stack
-        std::stack<Node> symbol_stack;
+        std::stack<Node*> symbol_stack;
 
         // State stack
         std::stack<int> state_stack;
@@ -45,9 +45,17 @@ class LR1 {
         // actions[state_stack.head, symbol_stack.head]
         std::pair<std::string, int> TopAction() const;
     public:
+        // Default constructor with default file name
         LR1();
+
+        // Constructor with specified file name
         LR1(std::string file_name);
-        Node Parse(std::vector<Token> tokens);
+
+        // Destructor
+        virtual ~LR1();
+
+        // Parses the tokens and outputs root of the parse tree
+        Node* Parse(std::vector<Token> tokens);
 };
 
 #endif
