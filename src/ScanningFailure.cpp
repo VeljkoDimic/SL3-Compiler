@@ -3,5 +3,5 @@
 ScanningFailure::ScanningFailure(std::string message):message(message){ }
 
 std::string ScanningFailure::getMessage() const {
-    return message;
+    return "SCANNING ERROR: " + message;
 }

@@ -1,5 +1,7 @@
 #include <string>
+#include <iostream>
 #include "LLVMGen.h"
+#include "CodeGenFailure.h"
 
 std::string LLVMGen::code(Node* n) {
     std::stringstream s;
@@ -9,7 +11,45 @@ std::string LLVMGen::code(Node* n) {
     s.str("");
     std::vector<std::string> rhs = prod.getRhs();
 
-    if (prod_string == "start BOF sexp EOF") {
+    std::deque<Node*> children = n->getChildren();
+
+    try {
+        if (prod_string == "start BOF sexp EOF") {
+            s << code(children.at(1));
+        }
+
+        if (prod_string == "sexps") {
+            //Do nothing
+        }
+
+        if (prod_string == "sexp NUM") {
+            //TODO: more efficient way than add?
+            ++instruction;
+            s << '%' << instruction << " = add i32 0, "
+                << children.at(0)->getProduction().getRhs().at(0)
+                << '\n';
+        }
+
+        if (prod_string == "sexp ID") {
+            std::string var =
+                children.at(0)->getProduction().getRhs().at(0);
+
+            // If the variable is not found in the symbol table
+            if (symbol_table.find(var) == symbol_table.end()) {
+                throw CodeGenFailure("Variable '" + var + "' not defined");
+            }
+
+            //TODO: More effective method
+            ++instruction;
+            s << '%' << instruction << " = add i32 0, "
+                << symbol_table.at(var) << '\n';
+        }
+
+    } catch (CodeGenFailure &f) {
+        throw f;
+    } catch (...) {
+        throw CodeGenFailure("Failed code generation at production '"
+                + prod_string + "'");
     }
 
     return s.str();
@@ -20,12 +60,12 @@ std::string LLVMGen::printNumCode(int i) {
     std::stringstream s;
     for (char& c : num) {
         ++instruction;
-        s << "%" << instruction
+        s << '%' << instruction
             << " = tail call i32 @putchar(i32 " <<
             (int)c << ")\n";
     }
     ++instruction;
-    s << "%" << instruction
+    s << '%' << instruction
         << "= tail call i32 @putchar(i32 " <<
         (int)'\n' << ")\n";
     return s.str();

@@ -37,7 +37,7 @@ std::vector<Token> DFA::simplifiedMaximalMunch(std::string input) const {
                 if (failed(state)) {
                     munched_input += *position;
                 }
-                throw ScanningFailure("SCANNING ERROR: Simplified maximal "
+                throw ScanningFailure("Simplified maximal "
                         "munch failed on input: "
                         + munched_input);
             }

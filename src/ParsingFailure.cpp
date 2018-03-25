@@ -3,5 +3,5 @@
 ParsingFailure::ParsingFailure(std::string message):message(message){ }
 
 std::string ParsingFailure::getMessage() const {
-    return message;
+    return "PARSING ERROR: " + message;
 }

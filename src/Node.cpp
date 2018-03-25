@@ -23,6 +23,10 @@ Production Node::getProduction() const {
     return production;
 }
 
+std::deque<Node*> Node::getChildren() const {
+    return children;
+}
+
 std::ostream& operator<< (std::ostream &strm, const Node &a) {
     strm << a.production << std::endl;
     for (Node* n : a.children) {

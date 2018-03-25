@@ -10,6 +10,7 @@
 #include "LLVMGen.h"
 #include "ScanningFailure.h"
 #include "ParsingFailure.h"
+#include "CodeGenFailure.h"
 
 int main(int argc, char** argv) {
     std::cout << "Lexing..." << std::endl;
@@ -36,11 +37,9 @@ int main(int argc, char** argv) {
         //std::cout << tokens.at(i) << std::endl;
     //}
 
-    std::cout << "Parsing..." << std::endl;
-
-    Node* root;
-
     // Parsing
+    std::cout << "Parsing..." << std::endl;
+    Node* root;
     try {
         LR1 lr1("SL3.lr1");
         root = lr1.Parse(tokens);
@@ -50,8 +49,16 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    LLVMGen llvm(root);
-    std::cout << llvm.getLlvm() << std::endl;
+    // Code Generation (LLVM)
+    std::cout << "Generating Code..." << std::endl;
+    try {
+        LLVMGen llvm(root);
+        std::cout << llvm.getLlvm() << std::endl;
+
+    } catch (CodeGenFailure &f) {
+        std::cerr << f.getMessage() << std::endl;
+        return 1;
+    }
 
     return 0;
 }

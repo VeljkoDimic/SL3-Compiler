@@ -27,7 +27,11 @@ class Node {
         // Add child Node to children
         void AddChild(Node* n);
 
+        // Return production
         Production getProduction() const;
+
+        // Return children
+        std::deque<Node*> getChildren() const;
 
         // << overload
         friend std::ostream& operator<< (std::ostream &strm, const Node &a);

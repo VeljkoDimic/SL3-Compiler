@@ -12,7 +12,7 @@ void LR1::ReadLr1(std::string file_name) {
     std::ifstream lr1(file_name);
 
     if (!lr1) {
-        throw ParsingFailure("PARSING ERROR: Unable to find "
+        throw ParsingFailure("Unable to find "
                 "file " + file_name);
     }
 
@@ -24,7 +24,7 @@ void LR1::ReadLr1(std::string file_name) {
             getline(lr1, line);
             terminals.insert(line);
         } catch(...) {
-            throw ParsingFailure("PARSING ERROR: Unable to "
+            throw ParsingFailure("Unable to "
                     "read terminals. Failed at " + line);
         }
     }
@@ -37,7 +37,7 @@ void LR1::ReadLr1(std::string file_name) {
             getline(lr1, line);
             nonterminals.insert(line);
         } catch(...) {
-            throw ParsingFailure("PARSING ERROR: Unable to "
+            throw ParsingFailure("Unable to "
                     "read non-terminals. Failed at " + line);
         }
     }
@@ -46,7 +46,7 @@ void LR1::ReadLr1(std::string file_name) {
     try {
         getline(lr1, start_symbol);
     } catch(...) {
-            throw ParsingFailure("PARSING ERROR: Unable to "
+            throw ParsingFailure("Unable to "
                     "read start symbol");
     }
 
@@ -58,7 +58,7 @@ void LR1::ReadLr1(std::string file_name) {
             getline(lr1, line);
             productions.push_back(Production(line));
         } catch(...) {
-            throw ParsingFailure("PARSING ERROR: Unable to "
+            throw ParsingFailure("Unable to "
                     "read productions. Failed at " + line);
         }
     }
@@ -67,7 +67,7 @@ void LR1::ReadLr1(std::string file_name) {
     try {
         num_states = Utils::ReadIntLineFromFile(lr1);
     } catch(...) {
-            throw ParsingFailure("PARSING ERROR: Unable to "
+            throw ParsingFailure("Unable to "
                     "read number of states");
     }
 
@@ -91,7 +91,7 @@ void LR1::ReadLr1(std::string file_name) {
                         std::make_pair(start_state, follow),
                         std::make_pair(action, destination)));
         } catch(...) {
-            throw ParsingFailure("PARSING ERROR: Unable to "
+            throw ParsingFailure("Unable to "
                     "read actions. Failed at " + line);
         }
     }
@@ -102,7 +102,7 @@ std::pair<std::string, int> LR1::TopAction() const {
                         state_stack.top(),
                         symbol_stack.top()->getProduction().getLhs()));
     if (act == actions.end()) {
-        throw ParsingFailure("PARSING ERROR: Unable to find "
+        throw ParsingFailure("Unable to find "
                 "action at state " + std::to_string(state_stack.top()) +
                 " and symbol " + symbol_stack.top()->getProduction().getLhs());
     }
@@ -118,10 +118,6 @@ LR1::LR1(std::string file_name) {
 }
 
 LR1::~LR1() {
-    while (!symbol_stack.empty()) {
-        delete symbol_stack.top();
-        symbol_stack.pop();
-    }
 }
 
 Node* LR1::Parse(std::vector<Token> tokens) {
@@ -140,7 +136,7 @@ Node* LR1::Parse(std::vector<Token> tokens) {
     //Push sigma(q0, |-) on state stack
     std::pair<std::string, int> first_action = TopAction();
     if (std::strcmp(first_action.first.c_str(), "reduce") == 0) {
-        throw ParsingFailure("PARSING ERROR: Attempting to reduce "
+        throw ParsingFailure("Attempting to reduce "
                 "at start state");
     }
     state_stack.push(first_action.second);
@@ -194,7 +190,7 @@ Node* LR1::Parse(std::vector<Token> tokens) {
         //if (sigma(state_stack.top, a) == undefined) report parse error
         std::pair<std::string, int> curr_action = TopAction();
         if (std::strcmp(first_action.first.c_str(), "reduce") == 0) {
-            throw ParsingFailure("PARSING ERROR: Attempting to reduce "
+            throw ParsingFailure("Attempting to reduce "
                     "at shift state at state " +
                     std::to_string(state_stack.top()) + "and symbol " +
                     symbol_stack.top()->getProduction().getLhs());
@@ -205,7 +201,7 @@ Node* LR1::Parse(std::vector<Token> tokens) {
 
     //If it is done, add start state
     if (symbol_stack.top()->getProduction().getLhs() != "EOF") {
-        throw ParsingFailure("PARSING ERROR: Reached end of file "
+        throw ParsingFailure("Reached end of file "
                 "without 'EOF' symbol on stack");
     }
     //TODO: Remove hardcoding
