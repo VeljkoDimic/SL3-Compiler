@@ -45,6 +45,66 @@ std::string LLVMGen::code(Node* n) {
                 << symbol_table.at(var) << '\n';
         }
 
+        if (prod_string == "sexp TRUE") {
+            ++instruction;
+            s << '%' << instruction << " = add i32 0, 1\n";
+        }
+
+        if (prod_string == "sexp NIL") {
+            ++instruction;
+            s << '%' << instruction << " = add i32 0, 0\n";
+        }
+
+        if (prod_string == "sexp LPAREN COND sexp sexp sexp RPAREN") {
+            s << "; CONDITIONAL START\n";
+
+            // This will get the conditional value
+            s << code(children.at(2));
+
+            // This is the address of the condition value
+            int i32_cond_reg = instruction;
+
+            // Memory which stores result
+            int mem_value = ++instruction;
+            s << '%' << mem_value << " = alloca i32\n";
+
+            // Condition value as condition
+            int cond_reg = ++instruction;
+            s << '%' << cond_reg << " = icmp ne i32 0, %"
+                << i32_cond_reg << '\n';
+
+            int true_label = ++instruction;
+            std::string true_string = code(children.at(3));
+            int false_label = ++instruction;
+            std::string false_string = code(children.at(4));
+            int end_label = ++instruction;
+
+            // Branch
+            s << "br i1 %" << cond_reg << ", label %"
+                << true_label << ", label %" << false_label << '\n';
+
+            // True branch
+            s << "; <label>:" << true_label << ":\n";
+            s << true_string;
+            s << "store i32 %" << (false_label-1)
+                << ", i32* %" << mem_value << '\n';
+            s << "br label %" << end_label << '\n';
+
+            // False branch
+            s << "; <label>:" << false_label << ":\n";
+            s << false_string;
+            s << "store i32 %" << (end_label-1)
+                << ", i32* %" << mem_value << '\n';
+            s << "br label %" << end_label << '\n';
+
+            // End branch
+            s << "; <label>:" << end_label << ":\n";
+            ++instruction;
+            s << '%' << instruction << " = load i32, i32* %"
+                << mem_value << '\n';
+
+        }
+
     } catch (CodeGenFailure &f) {
         throw f;
     } catch (...) {
