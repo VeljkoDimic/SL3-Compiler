@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <queue>
 #include "LLVMGen.h"
 #include "CodeGenFailure.h"
 
@@ -41,7 +42,7 @@ std::string LLVMGen::code(Node* n) {
 
             //TODO: More effective method
             ++instruction;
-            s << '%' << instruction << " = add i32 0, "
+            s << '%' << instruction << " = add i32 0, %"
                 << symbol_table.at(var) << '\n';
         }
 
@@ -103,6 +104,99 @@ std::string LLVMGen::code(Node* n) {
             s << '%' << instruction << " = load i32, i32* %"
                 << mem_value << '\n';
 
+        }
+
+        if (prod_string == "sexp LPAREN VAR ID sexp RPAREN" ||
+              prod_string == "sexp LPAREN DEFINE ID sexp RPAREN") {
+            std::string id = children.at(2)->getProduction().getRhs().at(0);
+            s << "; VAR " << id << '\n';
+            s << code(children.at(3));
+            symbol_table.insert(std::make_pair(id, instruction));
+        }
+
+        if (prod_string == "sexp LPAREN PLUS sexps RPAREN" ||
+            prod_string == "sexp LPAREN MINUS sexps RPAREN" ||
+            prod_string == "sexp LPAREN STAR sexps RPAREN" ||
+            prod_string == "sexp LPAREN SLASH sexps RPAREN" ||
+            prod_string == "sexp LPAREN MOD sexps RPAREN" ||
+            prod_string == "sexp LPAREN EQ sexps RPAREN" ||
+            prod_string == "sexp LPAREN NE sexps RPAREN" ||
+            prod_string == "sexp LPAREN LT sexps RPAREN" ||
+            prod_string == "sexp LPAREN GT sexps RPAREN" ||
+            prod_string == "sexp LPAREN LE sexps RPAREN" ||
+            prod_string == "sexp LPAREN GE sexps RPAREN" ||
+            prod_string == "sexp LPAREN AND sexps RPAREN" ||
+            prod_string == "sexp LPAREN OR sexps RPAREN" ||
+            prod_string == "sexp LPAREN NOT sexps RPAREN" ||
+            prod_string == "sexp LPAREN LOGAND sexps RPAREN" ||
+            prod_string == "sexp LPAREN LOGIOR sexps RPAREN" ||
+            prod_string == "sexp LPAREN LOGXOR sexps RPAREN" ||
+            prod_string == "sexp LPAREN LOGNOR sexps RPAREN" ||
+            prod_string == "sexp LPAREN LOGEQV sexps RPAREN") {
+
+            std::string operation = children.at(1)
+                ->getProduction().getLhs();
+            s << "; OPERATION: " << operation << '\n';
+
+            std::map<std::string, std::string> llvm_command = {
+                {"PLUS", "add"},
+                {"MINUS", "sub"},
+                {"STAR", "mul"},
+                {"SLASH", "sdiv"},
+                {"MOD", "srem"},
+                {"EQ", "eq"},           //TODO
+                {"NE", "ne"},           //TODO
+                {"LT", "slt"},          //TODO
+                {"GT", "sgt"},          //TODO
+                {"LE", "sle"},          //TODO
+                {"GE", "sge"},          //TODO
+                {"AND", "AND"},         //TODO
+                {"OR", "OR"},           //TODO
+                {"NOT", "NOT"},         //TODO
+                {"LOGAND", "and"},
+                {"LOGIOR", "or"},
+                {"LOGXOR", "xor"},
+                {"LOGNOR", "LOGNOR"},   //TODO
+                {"LOGEQV", "LOGEQV"}    //TODO
+            };
+
+            // Stores queue of operands. For example, for
+            // add 1 2 3, it would store the addresses as
+            // -> %3 %2 %1 ->
+            std::queue<int> operands;
+
+            Node* n = children.at(2);
+            // Iterate over all nodes and add to operand
+            while (n->getProduction().getRhs().size() != 0) {
+                s << code(n->getChildren().at(0));
+                operands.push(instruction);
+
+                n = n->getChildren().at(1);
+            }
+
+            bool first = true;
+            int default_val = 0;
+
+            // Goes through operands and does operation
+            while (!operands.empty()) {
+                ++instruction;
+                s << '%' << instruction << " = ";
+
+                // If it is first add, and also use default value.
+                if (first) {
+                    s << "add i32 " << std::to_string(default_val);
+                }
+                // If not first, do operation, and use previous value
+                else {
+                    s << llvm_command[operation] << " i32 "
+                        << '%' << std::to_string(instruction-1);
+                }
+
+                s << ", %" << operands.front() << '\n';
+
+                first = false;
+                operands.pop();
+            }
         }
 
     } catch (CodeGenFailure &f) {

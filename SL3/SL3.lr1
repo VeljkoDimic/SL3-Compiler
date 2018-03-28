@@ -110,7 +110,7 @@ params ID params
 7 LPAREN reduce 6
 7 EOF reduce 6
 8 COND shift 9
-8 VAR shift 13
+8 VAR shift 14
 8 DEFINE shift 18
 8 PLUS shift 22
 8 MINUS shift 27
@@ -159,7 +159,7 @@ params ID params
 13 NIL reduce 7
 13 LPAREN reduce 7
 13 EOF reduce 7
-13 ID shift 15
+14 ID shift 15
 15 sexp shift 16
 15 NUM shift 4
 15 ID shift 5

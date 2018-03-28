@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
     try {
         LR1 lr1("SL3.lr1");
         root = lr1.Parse(tokens);
-        std::cout << *root << std::endl;
+        //std::cout << *root << std::endl;
     } catch (ParsingFailure &f) {
         std::cerr << f.getMessage() << std::endl;
         return 1;

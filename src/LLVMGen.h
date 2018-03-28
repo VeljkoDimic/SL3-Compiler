@@ -14,7 +14,7 @@ class LLVMGen {
         // Keeps track of current top instruction number
         int instruction;
 
-        // Stores variables in symbol table
+        // Stores variables in symbol table (int being the instruction number)
         std::map<std::string, int> symbol_table;
 
         // Return code of node n
