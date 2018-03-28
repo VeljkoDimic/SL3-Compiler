@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <iterator>
+#include <fstream>
 #include "Utils.h"
 #include "LR1.h"
 #include "DFA.h"
@@ -53,7 +54,21 @@ int main(int argc, char** argv) {
     std::cout << "Generating Code..." << std::endl;
     try {
         LLVMGen llvm(root);
-        std::cout << llvm.getLlvm() << std::endl;
+
+        try {
+            std::ofstream llvm_file;
+            llvm_file.open("llvm_code.ll");
+            llvm_file << llvm.getLlvm();
+            llvm_file.close();
+        } catch (...) {
+            std::cerr << "Failed to open llvm output file"
+                << std::endl;
+        }
+        //TODO: Fix return value
+        //TODO: Flags to choose output file name
+        system("lli llvm_code.ll");
+
+        //std::cout << llvm.getLlvm() << std::endl;
 
     } catch (CodeGenFailure &f) {
         std::cerr << f.getMessage() << std::endl;
