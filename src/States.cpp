@@ -20,6 +20,7 @@ std::map<State, std::string> state_string = {
         {NE, "NE"},
         {LT, "LT"},
         {GT, "GT"},
+        {LE, "LE"},
         {GE, "GE"},
         {AND, "AND"},
         {OR, "OR"},

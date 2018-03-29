@@ -140,20 +140,20 @@ std::string LLVMGen::code(Node* n) {
                 {"STAR", "mul"},
                 {"SLASH", "sdiv"},
                 {"MOD", "srem"},
-                {"EQ", "eq"},           //TODO
-                {"NE", "ne"},           //TODO
-                {"LT", "slt"},          //TODO
-                {"GT", "sgt"},          //TODO
-                {"LE", "sle"},          //TODO
-                {"GE", "sge"},          //TODO
-                {"AND", "AND"},         //TODO
-                {"OR", "OR"},           //TODO
-                {"NOT", "NOT"},         //TODO
+                {"EQ", "eq"},
+                {"NE", "ne"},
+                {"LT", "slt"},
+                {"GT", "sgt"},
+                {"LE", "sle"},
+                {"GE", "sge"},
+                {"AND", "and"},
+                {"OR", "or"},
+                {"NOT", "and"},
                 {"LOGAND", "and"},
                 {"LOGIOR", "or"},
                 {"LOGXOR", "xor"},
-                {"LOGNOR", "LOGNOR"},   //TODO
-                {"LOGEQV", "LOGEQV"}    //TODO
+                {"LOGNOR", "or"},
+                {"LOGEQV", "xor"}
             };
 
             // Stores queue of operands. For example, for
@@ -174,13 +174,13 @@ std::string LLVMGen::code(Node* n) {
             int default_val = 0;
             if (operation == "EQ" || operation == "NE"  ||
                 operation == "LT" || operation == "GT" ||
-                operation == "LE" || operation == "GE" ||
-                operation == "AND" || operation == "OR" ||
-                operation == "NOT")
+                operation == "LE" || operation == "GE")
                 ++default_val;
 
             // Goes through operands and does operation
-            if (operation == "EQ" || operation == "NE") {
+            if (operation == "EQ" || operation == "NE" ||
+                    operation == "LT" || operation == "GT" ||
+                    operation == "LE" || operation == "GE") {
                 std::stack<int> comp_vals;
                 int expected_trues = 0;
                 while (!operands.empty()) {
@@ -263,16 +263,46 @@ std::string LLVMGen::code(Node* n) {
                 s << "; <label>:" << ++instruction << ":\n";
                 s << "store i32 0, i32* %" << mem_addr << '\n';
                 s << "br label %" << (instruction+1) << '\n';
-                // True
                 // End
                 s << "; <label>:" << ++instruction << ":\n";
                 s << '%' << ++instruction << " = load i32, i32* %"
                     << mem_addr << '\n';
             }
 
-
-            // + - * / % logand logor logxor
+            // + - * / % logand logor logxor lognor logeqv and or not
             else {
+                // Convert to 1 bit i32s
+                if (operation == "AND" || operation == "OR"
+                        || operation == "NOT") {
+                    std::queue<int> operands_updated;
+                    while (!operands.empty()) {
+                        int mem_addr = ++instruction;
+                        s << '%' << mem_addr << " = alloca i32\n";
+                        s << '%' << ++instruction << " = icmp ne i32 0, %"
+                            << operands.front() << '\n';
+                        operands.pop();
+                        s << "br i1 %" << instruction << ", label %"
+                            << (instruction+1) << ", label %"
+                            << (instruction+2) << '\n';
+                        // Non-Zero
+                        s << "; <label>:" << ++instruction << ":\n";
+                        s << "store i32 1, i32* %" << mem_addr << '\n';
+                        s << "br label %" << (instruction+2) << '\n';
+                        // Zero
+                        s << "; <label>:" << ++instruction << ":\n";
+                        s << "store i32 0, i32* %" << mem_addr << '\n';
+                        s << "br label %" << (instruction+1) << '\n';
+                        // End
+                        s << "; <label>:" << ++instruction << ":\n";
+                        s << '%' << ++instruction << " = load i32, i32* %"
+                            << mem_addr << '\n';
+                        operands_updated.push(instruction);
+                    }
+                    while (!operands_updated.empty()) {
+                        operands.push(operands_updated.front());
+                        operands_updated.pop();
+                    }
+                }
                 while (!operands.empty()) {
                     ++instruction;
                     s << '%' << instruction << " = ";
@@ -292,7 +322,16 @@ std::string LLVMGen::code(Node* n) {
                     first = false;
                     operands.pop();
                 }
+                // Get complement of these
+                if (operation == "LOGNOR" || operation == "LOGEQV"
+                        || operation == "NOT") {
+                    ++instruction;
+                    s << '%' << instruction << " = xor i32 "
+                        << (operation != "NOT" ? "-" : "")
+                        << "1, %" << (instruction-1) << '\n';
+                }
             }
+            s << "; END OPERATION: " << operation << '\n';
         }
 
     } catch (CodeGenFailure &f) {
@@ -305,7 +344,7 @@ std::string LLVMGen::code(Node* n) {
     return s.str();
 }
 
-std::string LLVMGen::printNumCode(int i) {
+std::string LLVMGen::PrintNumCode(int i) {
     std::string num = std::to_string(i);
     std::stringstream s;
     for (char& c : num) {

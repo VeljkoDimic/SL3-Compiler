@@ -66,7 +66,11 @@ int main(int argc, char** argv) {
         }
         //TODO: Fix return value
         //TODO: Flags to choose output file name
-        system("lli llvm_code.ll");
+        //TODO: Flags to choose optimization on object
+        //system("lli llvm_code.ll");
+        system("llc -filetype=obj llvm_code.ll");
+        system("gcc llvm_code.o");
+        system("rm llvm_code.o");
 
         //std::cout << llvm.getLlvm() << std::endl;
 

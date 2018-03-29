@@ -21,7 +21,7 @@ class LLVMGen {
         std::string code(Node* n);
 
         // Return code required to print a number
-        std::string printNumCode(int i);
+        std::string PrintNumCode(int i);
 
         // Return header code
         std::string header() const;
