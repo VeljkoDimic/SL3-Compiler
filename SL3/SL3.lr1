@@ -524,7 +524,7 @@ params ID params
 86 ID shift 95
 86 RPAREN reduce 31
 87 RPAREN shift 88
-88 RPAREN shift 89
+88 LPAREN shift 89
 89 sexp shift 90
 89 NUM shift 4
 89 ID shift 5

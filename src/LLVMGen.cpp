@@ -110,6 +110,50 @@ std::string LLVMGen::code(Node* n) {
             symbol_table.insert(std::make_pair(id, instruction));
         }
 
+        if (prod_string == "sexp LPAREN LPAREN LAMBDA LPAREN params "
+                "RPAREN LPAREN sexp RPAREN RPAREN sexps RPAREN") {
+            s << "; LAMBDA\n";
+
+            std::queue<std::string> param_ids;
+            std::queue<int> param_vals;
+            // Params
+            Node* n = children.at(4);
+            while (n->getProduction().getRhs().size() != 0) {
+                std::string var_id = n->getChildren().at(0)
+                    ->getProduction().getRhs().at(0);
+                if (symbol_table.find(var_id) != symbol_table.end()){
+                    throw CodeGenFailure("Variable '" + var_id
+                            + "' is already defined. Cannot be used in lambda");
+                }
+                param_ids.push(var_id);
+                n = n->getChildren().at(1);
+            }
+
+            n = children.at(10);
+            // Param values
+            while (n->getProduction().getRhs().size() != 0) {
+                s << code(n->getChildren().at(0));
+                param_vals.push(instruction);
+
+                n = n->getChildren().at(1);
+            }
+
+            if (param_ids.size() != param_vals.size()) {
+                throw CodeGenFailure("Number of parameters do not match "
+                        "in lambda");
+            }
+
+            while (!param_ids.empty()) {
+                symbol_table.insert(
+                        std::make_pair(param_ids.front(), param_vals.front()));
+                param_ids.pop();
+                param_vals.pop();
+            }
+            s << code(children.at(7));
+
+            s << "; END LAMBDA\n";
+        }
+
         if (prod_string == "sexp LPAREN PLUS sexps RPAREN" ||
             prod_string == "sexp LPAREN MINUS sexps RPAREN" ||
             prod_string == "sexp LPAREN STAR sexps RPAREN" ||
@@ -398,22 +442,6 @@ std::string LLVMGen::code(Node* n) {
                 + prod_string + "'");
     }
 
-    return s.str();
-}
-
-std::string LLVMGen::PrintNumCode(int i) {
-    std::string num = std::to_string(i);
-    std::stringstream s;
-    for (char& c : num) {
-        ++instruction;
-        s << '%' << instruction
-            << " = tail call i32 @putchar(i32 " <<
-            (int)c << ")\n";
-    }
-    ++instruction;
-    s << '%' << instruction
-        << "= tail call i32 @putchar(i32 " <<
-        (int)'\n' << ")\n";
     return s.str();
 }
 

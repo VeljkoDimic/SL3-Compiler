@@ -20,9 +20,6 @@ class LLVMGen {
         // Return code of node n
         std::string code(Node* n);
 
-        // Return code required to print a number
-        std::string PrintNumCode(int i);
-
         // Return header code
         std::string header() const;
 
