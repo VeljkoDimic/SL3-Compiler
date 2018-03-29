@@ -128,7 +128,8 @@ std::string LLVMGen::code(Node* n) {
             prod_string == "sexp LPAREN LOGIOR sexps RPAREN" ||
             prod_string == "sexp LPAREN LOGXOR sexps RPAREN" ||
             prod_string == "sexp LPAREN LOGNOR sexps RPAREN" ||
-            prod_string == "sexp LPAREN LOGEQV sexps RPAREN") {
+            prod_string == "sexp LPAREN LOGEQV sexps RPAREN" ||
+            prod_string == "sexp LPAREN WRITE sexps RPAREN") {
 
             std::string operation = children.at(1)
                 ->getProduction().getLhs();
@@ -153,7 +154,8 @@ std::string LLVMGen::code(Node* n) {
                 {"LOGIOR", "or"},
                 {"LOGXOR", "xor"},
                 {"LOGNOR", "or"},
-                {"LOGEQV", "xor"}
+                {"LOGEQV", "xor"},
+                {"WRITE", "putchar"}
             };
 
             // Stores queue of operands. For example, for
@@ -226,7 +228,6 @@ std::string LLVMGen::code(Node* n) {
 
                         first = false;
                     }
-                    //TODO: Check
                     else {
                         operands.pop();
                     }
@@ -267,6 +268,62 @@ std::string LLVMGen::code(Node* n) {
                 s << "; <label>:" << ++instruction << ":\n";
                 s << '%' << ++instruction << " = load i32, i32* %"
                     << mem_addr << '\n';
+            }
+
+            else if (operation == "WRITE") {
+                while (!operands.empty()) {
+                    int original_val = instruction;
+                    int remainder = ++instruction;
+                    s << '%' << remainder << " = alloca i32\n";
+                    s << "store i32 %" << operands.front()
+                        << ", i32* %" << remainder << '\n';
+                    operands.pop();
+                    int divisor = ++instruction;
+                    s << '%' << divisor << " = alloca i32\n";
+                    s << "store i32 1000000000"
+                        << ", i32* %" << divisor << '\n';
+                    int ten = ++instruction;
+                    s << '%' << ten << " = add i32 0, 10\n";
+                    int branch_start = ++instruction;
+                    s << "br label %" << branch_start << '\n';
+                    s << "; <label>:" << branch_start << ":\n";
+                    int remainder_val = ++instruction;
+                    s << '%' << remainder_val << " = load i32, i32* %"
+                        << remainder << '\n';
+                    int divisor_val = ++instruction;
+                    s << '%' << divisor_val << " = load i32, i32* %"
+                        << divisor << '\n';
+                    s << '%' << ++instruction << " = udiv i32 %"
+                        << remainder_val << ", %"
+                        << divisor_val << '\n';
+                    ++instruction;
+                    s << '%' << instruction << " = add i32 48, %"
+                        << (instruction-1) << '\n';
+                    ++instruction;
+                    s << '%' << instruction << " = tail call i32 @putchar(i32 %"
+                        << (instruction-1) << ")\n";
+                    int new_remainder_val = ++instruction;
+                    s << '%' << new_remainder_val << " = urem i32 %"
+                        << remainder_val << ", %"
+                        << divisor_val << '\n';
+                    s << "store i32 %" << new_remainder_val << ", i32* %"
+                        << remainder << '\n';
+                    int new_divisor_val = ++instruction;
+                    s << '%' << new_divisor_val << " = udiv i32 %"
+                        << divisor_val << ", 10\n";
+                    s << "store i32 %" << new_divisor_val << ", i32* %"
+                        << divisor << '\n';
+                    s << '%' << ++instruction << " = icmp ne i32 0, %"
+                        << new_divisor_val << '\n';
+                    s << "br i1 %" << instruction << ", label %"
+                        << branch_start << ", label %"
+                        << (instruction+1) << '\n';
+                    s << "; <label>:" << ++instruction << ":\n";
+                    s << '%' << ++instruction <<
+                        " = tail call i32 @putchar(i32 10)\n";
+                    s << '%' << ++instruction << " = add i32 0, %"
+                        << original_val << '\n';
+                }
             }
 
             // + - * / % logand logor logxor lognor logeqv and or not
