@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include <queue>
+#include <stack>
 #include "LLVMGen.h"
 #include "CodeGenFailure.h"
 
@@ -25,8 +26,7 @@ std::string LLVMGen::code(Node* n) {
 
         if (prod_string == "sexp NUM") {
             //TODO: more efficient way than add?
-            ++instruction;
-            s << '%' << instruction << " = add i32 0, "
+            s << '%' << ++instruction << " = add i32 0, "
                 << children.at(0)->getProduction().getRhs().at(0)
                 << '\n';
         }
@@ -41,19 +41,16 @@ std::string LLVMGen::code(Node* n) {
             }
 
             //TODO: More effective method
-            ++instruction;
-            s << '%' << instruction << " = add i32 0, %"
+            s << '%' << ++instruction << " = add i32 0, %"
                 << symbol_table.at(var) << '\n';
         }
 
         if (prod_string == "sexp TRUE") {
-            ++instruction;
-            s << '%' << instruction << " = add i32 0, 1\n";
+            s << '%' << ++instruction << " = add i32 0, 1\n";
         }
 
         if (prod_string == "sexp NIL") {
-            ++instruction;
-            s << '%' << instruction << " = add i32 0, 0\n";
+            s << '%' << ++instruction << " = add i32 0, 0\n";
         }
 
         if (prod_string == "sexp LPAREN COND sexp sexp sexp RPAREN") {
@@ -100,8 +97,7 @@ std::string LLVMGen::code(Node* n) {
 
             // End branch
             s << "; <label>:" << end_label << ":\n";
-            ++instruction;
-            s << '%' << instruction << " = load i32, i32* %"
+            s << '%' << ++instruction << " = load i32, i32* %"
                 << mem_value << '\n';
 
         }
@@ -176,26 +172,126 @@ std::string LLVMGen::code(Node* n) {
 
             bool first = true;
             int default_val = 0;
+            if (operation == "EQ" || operation == "NE"  ||
+                operation == "LT" || operation == "GT" ||
+                operation == "LE" || operation == "GE" ||
+                operation == "AND" || operation == "OR" ||
+                operation == "NOT")
+                ++default_val;
 
             // Goes through operands and does operation
-            while (!operands.empty()) {
+            if (operation == "EQ" || operation == "NE") {
+                std::stack<int> comp_vals;
+                int expected_trues = 0;
+                while (!operands.empty()) {
+
+                    // If size < 2 only return default val
+                    if (operands.size() < 2 && first) {
+                        s << '%' << ++instruction << " = add i32 0, "
+                            << default_val << '\n';
+                        first = false;
+                        expected_trues = 1;
+                        break;
+                    }
+                    else if (operands.size() > 1) {
+                        int mem_addr = ++instruction;
+                        s << '%' << mem_addr << " = alloca i32\n";
+
+                        ++instruction;
+                        s << '%' << instruction << " = icmp "
+                            << llvm_command[operation]
+                            << " i32 %" << operands.front();
+                        operands.pop();
+                        s << ", %" << operands.front() << '\n';
+
+                        // if it is true store 1 else store 0
+                        s << "br i1 %" << instruction << ", label %"
+                            << (instruction+1) << ", label %"
+                            << (instruction+2) << '\n';
+                        // True
+                        s << "; <label>:" << ++instruction << ":\n";
+                        s << "store i32 1, i32* %" << mem_addr << '\n';
+                        s << "br label %" << (instruction+2) << '\n';
+                        // False
+                        s << "; <label>:" << ++instruction << ":\n";
+                        s << "store i32 0, i32* %" << mem_addr << '\n';
+                        s << "br label %" << (instruction+1) << '\n';
+                        // End
+                        s << "; <label>:" << ++instruction << ":\n";
+                        s << '%' << ++instruction << " = load i32, i32* %"
+                            << mem_addr << '\n';
+                        comp_vals.push(instruction);
+
+                        ++expected_trues;
+
+                        first = false;
+                    }
+                    //TODO: Check
+                    else {
+                        operands.pop();
+                    }
+                }
+                // After adding all the bits to comp_vals,
+                // add them and check for zero
+                first = true;
+                while (!comp_vals.empty()) {
+                    s << '%' << ++instruction << " = add i32 ";
+                    if (first) {
+                        s << 0;
+                    }
+                    else {
+                        s << '%' << (instruction-1);
+                    }
+                    s << ", %" << comp_vals.top() << '\n';
+                    comp_vals.pop();
+                    first = false;
+                }
                 ++instruction;
-                s << '%' << instruction << " = ";
+                s << '%' << instruction << " = icmp eq i32 "
+                    << expected_trues << ", %"
+                    << (instruction-1) << '\n';
+                int mem_addr = ++instruction;
+                s << '%' << mem_addr << " = alloca i32\n";
+                s << "br i1 %" << (instruction-1) << ", label %"
+                    << (instruction+1) << ", label %"
+                    << (instruction+2) << '\n';
+                // True
+                s << "; <label>:" << ++instruction << ":\n";
+                s << "store i32 1, i32* %" << mem_addr << '\n';
+                s << "br label %" << (instruction+2) << '\n';
+                // False
+                s << "; <label>:" << ++instruction << ":\n";
+                s << "store i32 0, i32* %" << mem_addr << '\n';
+                s << "br label %" << (instruction+1) << '\n';
+                // True
+                // End
+                s << "; <label>:" << ++instruction << ":\n";
+                s << '%' << ++instruction << " = load i32, i32* %"
+                    << mem_addr << '\n';
+            }
 
-                // If it is first add, and also use default value.
-                if (first) {
-                    s << "add i32 " << std::to_string(default_val);
+
+            // + - * / % logand logor logxor
+            else {
+                while (!operands.empty()) {
+                    ++instruction;
+                    s << '%' << instruction << " = ";
+
+                    // If it is first add, and also use default value.
+                    if (first) {
+                        s << "add i32 " << default_val;
+                    }
+                    // If not first, do operation, and use previous value
+                    else {
+                        s << llvm_command[operation] << " i32 "
+                            << '%' << (instruction-1);
+                    }
+
+                    s << ", %" << operands.front() << '\n';
+
+                    first = false;
+                    operands.pop();
                 }
-                // If not first, do operation, and use previous value
-                else {
-                    s << llvm_command[operation] << " i32 "
-                        << '%' << std::to_string(instruction-1);
-                }
-
-                s << ", %" << operands.front() << '\n';
-
-                first = false;
-                operands.pop();
             }
         }
 
