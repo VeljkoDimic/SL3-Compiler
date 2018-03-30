@@ -18,7 +18,8 @@ Note that the last step is optional, but it is suggested that you put sl3 in you
 
 To view the output of an SL3 program,  simply execute `echo $?` after running the compiled binary. For example:
 ```
-$ path/to/sl3 example_program.sl3
+$ path/to/sl3 example_no_write.sl3
 $ ./a.out
 $ echo $?
+13
 ```
