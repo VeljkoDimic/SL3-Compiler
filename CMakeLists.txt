@@ -6,8 +6,6 @@ SET(CMAKE_CXX_COMPILER clang++)
 
 set (CMAKE_CXX_FLAGS "-std=c++14")
 
-file(COPY SL3/SL3.lr1 DESTINATION .)
-
-file(GLOB SOURCES "src/*.cpp" "src/*.h")
+file(GLOB SOURCES "src/*.cpp" "src/*.h SL3/SL3.lr1")
 
 add_executable(sl3 ${SOURCES})

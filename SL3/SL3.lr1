@@ -1,4 +1,4 @@
-32
+R"=====(32
 NUM
 ID
 LPAREN
@@ -552,4 +552,4 @@ params ID params
 95 params shift 96
 95 ID shift 95
 95 RPAREN reduce 31
-96 RPAREN reduce 32
+96 RPAREN reduce 32)====="

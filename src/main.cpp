@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <deque>
 #include <string>
 #include <sstream>
 #include <iterator>
@@ -13,6 +14,10 @@
 #include "ScanningFailure.h"
 #include "ParsingFailure.h"
 #include "CodeGenFailure.h"
+
+const char* SLR_FILE =
+#include "../SL3/SL3.lr1"
+;
 
 struct Flags {
     // All files to be inputted
@@ -36,6 +41,8 @@ struct Flags {
 };
 
 Flags getFlags(int argc, char ** argv);
+
+std::deque<std::string> SplitByLine(const char* file);
 
 int main(int argc, char** argv) {
     Flags flags = getFlags(argc, argv);
@@ -114,7 +121,7 @@ int main(int argc, char** argv) {
         }
         Node* root;
         try {
-            LR1 lr1("SL3.lr1");
+            LR1 lr1(SplitByLine(SLR_FILE));
             root = lr1.Parse(tokens);
 
             if (flags.verbose) {
@@ -289,4 +296,25 @@ Flags getFlags(int argc, char ** argv) {
     }
     
     return flags;
+}
+
+std::deque<std::string> SplitByLine(const char* file) {
+    std::string str = file;
+    std::deque<std::string> result;
+    int beg=0, end=0; // begining and end of each line in the array
+    end = str.find('\n', beg + 1);
+    while(end) {
+        end = str.find('\n', beg + 1);
+        if(end == -1) {
+            std::string s = str.substr(beg);
+            s.erase(std::remove(s.begin(), s.end(), '\n'), s.end());
+            result.push_back(s);
+            break;
+        }
+        std::string s = str.substr(beg, end-beg);
+        s.erase(std::remove(s.begin(), s.end(), '\n'), s.end());
+        result.push_back(s);
+        beg = end;
+    }
+    return result;
 }

@@ -5,6 +5,7 @@
 #include <string>
 #include <set>
 #include <vector>
+#include <deque>
 #include "Production.h"
 #include "Node.h"
 #include "Token.h"
@@ -39,17 +40,17 @@ class LR1 {
         // State stack
         std::stack<int> state_stack;
 
-        // Reads a .lr1 file and populates LR1
-        void ReadLr1(std::string file_name);
+        // Reads .lr1 file lines and populates LR1
+        void ReadLr1(std::deque<std::string> lines);
 
         // actions[state_stack.head, symbol_stack.head]
         std::pair<std::string, int> TopAction() const;
     public:
-        // Default constructor with default file name
+        // Default constructor
         LR1();
 
-        // Constructor with specified file name
-        LR1(std::string file_name);
+        // Constructor with given LR1 file
+        LR1(std::deque<std::string> lines);
 
         // Destructor
         virtual ~LR1();

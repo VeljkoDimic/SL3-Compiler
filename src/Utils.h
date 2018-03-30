@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <deque>
 #include <sstream>
 #include <fstream>
 #include <iostream>
@@ -23,11 +24,12 @@ namespace Utils {
         return elems;
     }
 
-    static inline int ReadIntLineFromFile(std::ifstream &file) {
+    static inline int ReadIntLineFromLines(std::deque<std::string>& lines) {
         int num = 0;
-        std::string line = "";
+        std::string line;
         try {
-            getline(file, line);
+            line = lines.at(0);
+            lines.pop_front();
             std::istringstream iss(line);
             iss >> num;
         } catch(...) {

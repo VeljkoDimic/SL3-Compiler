@@ -4,24 +4,19 @@
 #include <iostream>
 #include <sstream>
 #include <list>
+#include <deque>
 #include "Node.h"
 #include "ParsingFailure.h"
 #include "States.h"
 
-void LR1::ReadLr1(std::string file_name) {
-    std::ifstream lr1(file_name);
-
-    if (!lr1) {
-        throw ParsingFailure("Unable to find "
-                "file " + file_name);
-    }
-
+void LR1::ReadLr1(std::deque<std::string> lines) {
     // Read terminals
-    int num_terminals = Utils::ReadIntLineFromFile(lr1);
+    int num_terminals = Utils::ReadIntLineFromLines(lines);
     for (int i = 0; i < num_terminals; ++i) {
         std::string line = "";
         try {
-            getline(lr1, line);
+            line = lines.at(0).c_str();
+            lines.pop_front();
             terminals.insert(line);
         } catch(...) {
             throw ParsingFailure("Unable to "
@@ -30,11 +25,12 @@ void LR1::ReadLr1(std::string file_name) {
     }
 
     // Read nonterminals
-    int num_nonterminals = Utils::ReadIntLineFromFile(lr1);
+    int num_nonterminals = Utils::ReadIntLineFromLines(lines);
     for (int i = 0; i < num_nonterminals; ++i) {
         std::string line = "";
         try {
-            getline(lr1, line);
+            line = lines.at(0);
+            lines.pop_front();
             nonterminals.insert(line);
         } catch(...) {
             throw ParsingFailure("Unable to "
@@ -44,18 +40,20 @@ void LR1::ReadLr1(std::string file_name) {
 
     // Read start symbol
     try {
-        getline(lr1, start_symbol);
+        start_symbol = lines.at(0);
+        lines.pop_front();
     } catch(...) {
             throw ParsingFailure("Unable to "
                     "read start symbol");
     }
 
     // Read productions
-    int num_productions = Utils::ReadIntLineFromFile(lr1);
+    int num_productions = Utils::ReadIntLineFromLines(lines);
     for (int i = 0; i < num_productions; ++i) {
         std::string line = "";
         try {
-            getline(lr1, line);
+            line = lines.at(0);
+            lines.pop_front();
             productions.push_back(Production(line));
         } catch(...) {
             throw ParsingFailure("Unable to "
@@ -65,18 +63,19 @@ void LR1::ReadLr1(std::string file_name) {
 
     // Read number of states
     try {
-        num_states = Utils::ReadIntLineFromFile(lr1);
+        num_states = Utils::ReadIntLineFromLines(lines);
     } catch(...) {
             throw ParsingFailure("Unable to "
                     "read number of states");
     }
 
     // Read actions
-    int num_actions = Utils::ReadIntLineFromFile(lr1);
+    int num_actions = Utils::ReadIntLineFromLines(lines);
     for (int i = 0; i < num_actions; ++i) {
         std::string line = "";
         try {
-            getline(lr1, line);
+            line = lines.at(0);
+            lines.pop_front();
             std::stringstream line_ss(line);
 
             int start_state;
@@ -110,11 +109,12 @@ std::pair<std::string, int> LR1::TopAction() const {
 }
 
 LR1::LR1() {
-    ReadLr1("SL3.lr1");
+    std::deque<std::string> d;
+    ReadLr1(d);
 }
 
-LR1::LR1(std::string file_name) {
-    ReadLr1(file_name);
+LR1::LR1(std::deque<std::string> lines) {
+    ReadLr1(lines);
 }
 
 LR1::~LR1() {
