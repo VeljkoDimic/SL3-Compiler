@@ -40,7 +40,6 @@ std::string LLVMGen::code(Node* n) {
                 throw CodeGenFailure("Variable '" + var + "' not defined");
             }
 
-            //TODO: More effective method
             s << '%' << ++instruction << " = add i32 0, %"
                 << symbol_table.at(var) << '\n';
         }

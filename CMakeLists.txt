@@ -10,4 +10,4 @@ file(COPY SL3/SL3.lr1 DESTINATION .)
 
 file(GLOB SOURCES "src/*.cpp" "src/*.h")
 
-add_executable(SL3 ${SOURCES})
+add_executable(sl3 ${SOURCES})
