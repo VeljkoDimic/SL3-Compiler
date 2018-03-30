@@ -73,11 +73,13 @@ int main(int argc, char** argv) {
     // Generate outputs for all files
     for (auto file_name : flags.input_files) {
 
-        std::cout << "Lexing..." << std::endl;
+        // Lexing
+        if (flags.verbose) {
+            std::cout << "Lexing..." << std::endl;
+        }
 
         std::vector<Token> tokens;
 
-        // Lexing
         try {
             std::ifstream input_file(file_name);
 
@@ -100,24 +102,33 @@ int main(int argc, char** argv) {
             std::cerr << "Unable to open file " << file_name << std::endl;
         }
 
-        //for (int i = 0; i < tokens.size(); ++i) {
-            //std::cout << tokens.at(i) << std::endl;
-        //}
+        if (flags.verbose) {
+            for (int i = 0; i < tokens.size(); ++i) {
+                std::cout << tokens.at(i) << std::endl;
+            }
+        }
 
         // Parsing
-        std::cout << "Parsing..." << std::endl;
+        if (flags.verbose) {
+            std::cout << std::endl << "Parsing..." << std::endl;
+        }
         Node* root;
         try {
             LR1 lr1("SL3.lr1");
             root = lr1.Parse(tokens);
-            //std::cout << *root << std::endl;
+
+            if (flags.verbose) {
+                std::cout << *root << std::endl;
+            }
         } catch (ParsingFailure &f) {
             std::cerr << f.getMessage() << std::endl;
             return 1;
         }
 
         // Code Generation (LLVM)
-        std::cout << "Generating Code..." << std::endl;
+        if (flags.verbose) {
+            std::cout << std::endl << "Generating Code..." << std::endl;
+        }
         try {
             std::string time = std::to_string(std::time(0));
             std::string llvm_file_prefix = "llvm_" + time;
@@ -126,9 +137,6 @@ int main(int argc, char** argv) {
             if (flags.llvm_output_file != "") {
                 llvm_file_name = flags.llvm_output_file;
                 llvm_file_prefix = llvm_file_name;
-            //if (num_bin_generated > 0) {
-                //llvm_file_name += std::to_string(num_bin_generated+1);
-            //}
 
                 // 'test' => 'test.o'
                 // 'test.ll' => 'test.o'
@@ -139,18 +147,18 @@ int main(int argc, char** argv) {
                     std::string file_type = llvm_file_name.substr(dot+1);
                     if (file_type == "ll") {
                         llvm_file_prefix = llvm_file_name.substr(0,dot);
-                        if (num_bin_generated > 0) {
+                        if (num_bin_generated) {
                             llvm_file_prefix +=
                                 std::to_string(num_bin_generated+1);
                         }
                         llvm_file_name = llvm_file_prefix + ".ll";
                     }
-                    else if (num_bin_generated > 0) {
+                    else if (num_bin_generated) {
                         llvm_file_name += std::to_string(num_bin_generated+1);
                         llvm_file_prefix += std::to_string(num_bin_generated+1);
                     }
                 }
-                else if (num_bin_generated > 0) {
+                else if (num_bin_generated) {
                     llvm_file_name += std::to_string(num_bin_generated+1);
                     llvm_file_prefix += std::to_string(num_bin_generated+1);
                 }
@@ -167,7 +175,15 @@ int main(int argc, char** argv) {
                 std::cerr << "Failed to open llvm output file"
                     << std::endl;
             }
-            //TODO: Flags to choose optimization on object
+
+            // Optimization in LLVM
+            if (flags.optimization) {
+                std::string opt_command = "opt -S -O";
+                opt_command += std::to_string(flags.optimization);
+                opt_command += " " + llvm_file_name + " -o " + llvm_file_name;
+                system(opt_command.c_str());
+            }
+
             // Create .o file
             std::string llc_command = "llc -filetype=obj " + llvm_file_name;
             system(llc_command.c_str());
@@ -182,11 +198,10 @@ int main(int argc, char** argv) {
             }
             else {
                 output_bin_name << flags.binary_output_file;
-                if (num_bin_generated > 0) {
+                if (num_bin_generated) {
                     output_bin_name << (num_bin_generated+1);
                 }
             }
-
             std::string gcc_command = "gcc " + llvm_file_prefix + ".o"
                 + " -o " + output_bin_name.str();
             system(gcc_command.c_str());
@@ -201,7 +216,9 @@ int main(int argc, char** argv) {
                 system(rm_ll.c_str());
             }
 
-            //std::cout << llvm.getLlvm() << std::endl;
+            if (flags.verbose) {
+                std::cout << "Code generated" << std::endl;
+            }
 
             ++num_bin_generated;
         } catch (CodeGenFailure &f) {
