@@ -1,0 +1,12 @@
+logand: If both bits are 1, return 1; else 0
+logior: If one or both bits are 1, return 1; else 0
+logxor: If both bits are not equal, return 1; else 0
+lognor: Return the inverse of a logior operation (ie if logior returns 1, return 0, and vice versa)
+logeqv: Return the inverse of a logxor operation
+
+Expected output:
+8
+14
+10
+-15
+-11

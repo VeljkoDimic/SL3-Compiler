@@ -316,6 +316,14 @@ std::string LLVMGen::code(Node* n) {
             else if (operation == "WRITE") {
                 while (!operands.empty()) {
                     int original_val = instruction;
+                    if (original_val == instruction) {
+                        original_val = ++instruction;
+                        s << '%' << original_val << " = add i32 0, 0\n";
+                        if (operands.size() == 1 && operands.front() == 0) {
+                            operands.pop();
+                            operands.push(1);
+                        }
+                    }
                     int remainder = ++instruction;
                     s << '%' << remainder << " = alloca i32\n";
                     s << "store i32 %" << operands.front()

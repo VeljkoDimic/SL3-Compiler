@@ -1,0 +1,18 @@
+(write
+    (cond t
+        10
+        20
+    )
+    (cond nil
+        10
+        20
+    )
+    (cond (and 55 98)
+        10
+        20
+    )
+    (cond (or nil 0 0 nil nil)
+        10
+        20
+    )
+)

@@ -1,0 +1,7 @@
+(write
+    (logand 12 6)
+    (logior 12 6)
+    (logxor 12 6)
+    (lognor 12 6)
+    (logeqv 12 6)
+)

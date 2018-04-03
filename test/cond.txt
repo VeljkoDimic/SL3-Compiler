@@ -1,0 +1,7 @@
+Cond takes in a parameter as its first s-expression, and if it is zero it executes the last s-expression, otherwise execute the second s-expression
+
+Expected output:
+10
+20
+10
+20

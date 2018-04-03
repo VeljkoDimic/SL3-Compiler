@@ -1,0 +1,5 @@
+Constants can be used like numbers
+
+Expected output:
+1
+0

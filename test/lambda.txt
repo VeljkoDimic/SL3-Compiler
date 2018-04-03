@@ -1,0 +1,6 @@
+Lambda expressions in SL3 follow the example file. After the lambda, the program takes parameter ids. In this example, the named variables are x, y, and z. The variables are set to the values at the end (in this case 1, 2, and 3 respectively). The lambda will return the expression evaluated in the body of the lambda.
+The example will result in the following:
+(y + z) - x = (2 + 3) - 1
+
+Expected output:
+4

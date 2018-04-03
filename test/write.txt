@@ -1,0 +1,12 @@
+Write prints out all of the s-expressions. It returns the value of the last executed s-expression. Currently only supports unsigned 32 bit integers, so for example -1 will return 4294967295 (which is equivalent to signed -1). For recursive write calls, the inner s-expressions are evaluated first, so the example program will write 12 first, then write in the order of the values in the outer write. This can be further nested.
+
+Expected output:
+12
+5
+10
+4294967295
+10
+12
+
+Return value:
+12

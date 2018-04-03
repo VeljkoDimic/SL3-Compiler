@@ -1,0 +1,3 @@
+/Users/veljkodimic/Documents/SL3/src/CMakeFiles/rebuild_cache.dir
+/Users/veljkodimic/Documents/SL3/src/CMakeFiles/edit_cache.dir
+/Users/veljkodimic/Documents/SL3/src/CMakeFiles/sl3.dir
