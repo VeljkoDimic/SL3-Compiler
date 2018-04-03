@@ -1,0 +1,6 @@
+Same as and, but returns 1 if any arguments are non-zero
+
+Expected output:
+0
+1
+1

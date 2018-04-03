@@ -1,1 +1,5 @@
 The definition is done in a depth first search, so everything after the definition still has the definition available. This means that the last FIVE is still valid. However, if FIVE were to be used before the definition, it would be invalid.
+
+Expected output:
+11
+11

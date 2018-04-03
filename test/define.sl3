@@ -1,1 +1,4 @@
-(+ (define FIVE (- 7 2)) 3 FIVE)
+(write
+    (+ (define x (- 7 2)) 1 x)
+    (+ (var y (- 7 2)) 1 y)
+)

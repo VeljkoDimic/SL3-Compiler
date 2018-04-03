@@ -1,0 +1,6 @@
+(write
+    (not 1)
+    (not 0)
+    (not 1 1 1)
+    (not 1 0 1)
+)

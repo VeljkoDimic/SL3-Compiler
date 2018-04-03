@@ -1,0 +1,27 @@
+Less than, less than equal to, greater than, greater than equal to, equal, not equal.
+All return 1 or 0.
+
+Expected output:
+1
+0
+0
+
+1
+1
+0
+
+0
+0
+1
+
+0
+1
+1
+
+0
+1
+0
+
+1
+0
+1

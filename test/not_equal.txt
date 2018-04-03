@@ -1,0 +1,5 @@
+Same as equal, but opposite
+
+Expected output:
+1
+0

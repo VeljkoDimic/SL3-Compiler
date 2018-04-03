@@ -3,7 +3,7 @@ Simplified Lisp-Like Language (SL3) is, as its name suggests, a language that is
 
 The compiler consists of a lexer, an SLR parser, and LLVM code generation. The compiler reads input at the lexing stage, parses into a parse tree, and then transpiles to LLVM and compiles LLVM.
 
-To use SL3, please first download [LLVM](https://llvm.org/docs/GettingStarted.html) (I suggest using [homebrew](https://embeddedartistry.com/blog/2017/2/20/installing-clangllvm-on-osx) on OSX). Make sure the llvm executables are in your $PATH.
+To use SL3, please first download [LLVM](https://llvm.org/docs/GettingStarted.html) (If you are on OSX, I suggest using [homebrew](https://embeddedartistry.com/blog/2017/2/20/installing-clangllvm-on-osx)). Make sure the llvm executables are in your $PATH.
 
 For some example programs, take a look at test/.
 

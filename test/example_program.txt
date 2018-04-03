@@ -1,0 +1,6 @@
+This is a simple program demonstrating some basic functionalities of SL3.
+
+Expected output:
+26
+1
+12

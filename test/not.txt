@@ -1,0 +1,7 @@
+Returns the inverse of and.
+
+Expected output:
+0
+1
+0
+1

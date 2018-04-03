@@ -1,0 +1,8 @@
+Equal returns either one or zero, one if equal and zero if not
+
+Expected output:
+1
+1
+0
+1
+2

@@ -1,0 +1,3 @@
+This is a simple example without using write. The program will return (26 - 1 - 12) = 13.
+
+To view output after running, in bash use 'echo $?'
